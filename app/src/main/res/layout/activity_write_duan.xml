@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:id="@+id/rl"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.dell.quarter.WriteDuanActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y25"
+        android:background="#03A9F4"
+        android:id="@+id/include">
+
+        <TextView
+            android:id="@+id/tv_quxiao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/y5"
+            android:text="取消"
+            android:textColor="#fff"
+            android:layout_marginLeft="@dimen/x5"/>
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="发表文章"
+            android:layout_marginTop="@dimen/y5"
+            android:textColor="#ffffff"/>
+
+
+        <TextView
+            android:id="@+id/tv_fabiao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="发表"
+            android:textColor="#fff"
+            android:layout_marginTop="@dimen/y5"
+            android:layout_marginRight="@dimen/x5"/>
+    </RelativeLayout>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y120"
+        android:textSize="13sp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/include"
+        android:background="@null"
+        android:gravity="top"
+        android:padding="@dimen/x6"
+        android:hint="请输入内容,禁止输入色情,暴力等违法国家法律的内容,违者将以封号处理!"
+        android:id="@+id/et_duanzi" />
+
+    <ImageView
+        android:id="@+id/iv_tupian"
+        android:layout_width="@dimen/x100"
+        android:layout_height="@dimen/y100"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/et_duanzi"
+        android:src="@drawable/jia"
+        android:layout_marginLeft="@dimen/x15"/>
+    <Button
+        android:id="@+id/bt"
+        android:layout_width="@dimen/x150"
+        android:layout_height="@dimen/x20"
+        android:text="长按可删除图片"
+        android:background="@drawable/delete_bg"
+        android:layout_below="@+id/iv_tupian"
+        android:textColor="#03A9F4"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/bt"/>
+
+
+
+</RelativeLayout>
