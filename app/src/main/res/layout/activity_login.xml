@@ -30,18 +30,22 @@
 
 
         <ImageView
-            android:layout_marginTop="@dimen/y3"
-            android:layout_marginLeft="@dimen/x63"
             android:layout_width="@dimen/x30"
             android:layout_height="@dimen/y25"
-            android:src="@drawable/weiixin"/>
+            android:layout_alignEnd="@+id/textView4"
+            android:layout_alignRight="@+id/textView4"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="58dp"
+            android:layout_marginRight="58dp"
+            android:src="@drawable/weiixin" />
         <TextView
             android:layout_width="@dimen/x57"
             android:layout_height="@dimen/y45"
             android:layout_marginLeft="@dimen/x95"
             android:text="微信登录"
             android:textColor="#FFF"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:id="@+id/textView4" />
     </RelativeLayout>
 
     <RelativeLayout

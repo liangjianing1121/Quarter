@@ -3,8 +3,10 @@
     package="com.example.dell.quarter">
 
     <uses-sdk android:minSdkVersion="8" />
+
     <uses-permission android:name="android.permission.BLUETOOTH" />
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+
     <!-- 个推3.0电子围栏功能所需权限 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -15,6 +17,14 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <!-- 用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <!-- 用于申请调用A-GPS模块 -->
+    <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    <!-- 用于申请获取蓝牙信息进行室内定位 -->
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
     <application
         android:name=".MyApp"
@@ -40,7 +50,11 @@
         <meta-data
             android:name="UMENG_CHANNEL"
             android:value="Channel ID" />
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="eacaf3b643052b5c042dc891cbf34ed9"></meta-data>
 
+        <service android:name="com.amap.api.location.APSService" />
         <service
             android:name="server.DemoPushService"
             android:exported="true"
@@ -55,7 +69,8 @@
         <activity android:name=".WriteDuanActivity" />
         <activity android:name=".PulishSuccessActivity" />
         <activity android:name=".SettingActivity" />
-        <activity android:name=".ChangeUserActivity"></activity>
+        <activity android:name=".ChangeUserActivity" />
+        <activity android:name=".MapActivity"></activity>
     </application>
 
 </manifest>

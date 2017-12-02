@@ -40,7 +40,15 @@ public class Fragment2 extends Fragment implements DuanListView {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = View.inflate(getContext(), R.layout.fragment2, null);
+        if(view==null)
+        {
+            view = inflater.inflate(R.layout.fragment2,null);
+        }
+        ViewGroup parent = (ViewGroup) view.getParent();
+        if(parent!=null)
+        {
+            parent.removeView(view);
+        }
 
         return view;
 }

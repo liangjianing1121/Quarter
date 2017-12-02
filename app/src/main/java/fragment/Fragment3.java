@@ -35,7 +35,16 @@ public class Fragment3 extends Fragment{
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = View.inflate(getContext(), R.layout.fragment3, null);
+        if(view==null)
+        {
+            view = inflater.inflate(R.layout.fragment3,null);
+        }
+        ViewGroup parent = (ViewGroup) view.getParent();
+        if(parent!=null)
+        {
+            parent.removeView(view);
+        }
+
         return view;
     }
 

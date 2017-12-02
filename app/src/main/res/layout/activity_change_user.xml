@@ -21,6 +21,7 @@
         android:layout_alignLeft="@+id/relativeLayout5"
         android:layout_alignStart="@+id/relativeLayout5"
         fresco:roundAsCircle="true"
+            app:placeholderImage="@drawable/head"
             android:layout_margin="@dimen/x10"/>
 
         

@@ -10,6 +10,7 @@ import bean.Register;
 import bean.UpLoad;
 import bean.UpdateNickname;
 import bean.User;
+import bean.Version;
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
 import okhttp3.ResponseBody;
@@ -59,5 +60,9 @@ public interface ApiService {
     @POST("file/upload")
     @Multipart
     Observable<UpLoad> upload(@Query("uid") String uid,@Part MultipartBody.Part img);
+
+    @POST("quarter/getVersion")
+    Observable<Version> getVersion();
+
 
 }

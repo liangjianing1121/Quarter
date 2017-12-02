@@ -62,16 +62,6 @@ public class ChangUserModel {
                     }
                 });
     }
-
-
-
-
-
-
-
-
-
-
     /**
      * 修改头像
      * @param uid

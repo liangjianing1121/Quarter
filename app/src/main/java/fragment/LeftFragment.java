@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.EventLog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,8 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import de.greenrobot.event.EventBus;
+import de.greenrobot.event.Subscribe;
+import de.greenrobot.event.ThreadMode;
 import presenter.UserPresenter;
 import view.UserView;
 
@@ -33,58 +36,76 @@ import view.UserView;
  * Created by DELL on 2017/11/25.
  */
 
-public class LeftFragment extends Fragment implements UserView {
+public class LeftFragment extends Fragment implements UserView, View.OnClickListener {
 
 
-    @BindView(R.id.iv_head)
-    SimpleDraweeView ivHead;
-    @BindView(R.id.tv_leftname)
-    TextView tvName;
-    Unbinder unbinder;
-    @BindView(R.id.ll_shezhi)
-    LinearLayout llShezhi;
+
+    private SimpleDraweeView ivHead;
+    private TextView tvName;
+    private LinearLayout llShezhi;
 
     private View view;
-    private TextView name;
-    private User user1;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = View.inflate(getContext(), R.layout.leftfragment, null);
-        unbinder = ButterKnife.bind(this, view);
+        if(view==null)
+        {
+            view = inflater.inflate(R.layout.leftfragment,null);
+        }
+        ViewGroup parent = (ViewGroup) view.getParent();
+        if(parent!=null)
+        {
+            parent.removeView(view);
+        }
+
         return view;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        initView();
+        EventBus.getDefault().register(this);
         initData();
     }
 
-    private void initData() {
+    @Override
+    public void onResume() {
+        super.onResume();
         UserPresenter presenter = new UserPresenter(this, getContext());
         SharedPreferences uidsp = getActivity().getSharedPreferences("uid", Context.MODE_PRIVATE);
         int uid = uidsp.getInt("uid", 0);
-        presenter.getUser(uid + "");
+      //  presenter.getUser(uid + "");
 
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
+    private void initView() {
+      ivHead = view.findViewById(R.id.iv_head);
+      tvName=view.findViewById(R.id.tv_leftname);
+      llShezhi = view.findViewById(R.id.ll_shezhi);
+
+
+      ivHead.setOnClickListener(this);
+      llShezhi.setOnClickListener(this);
+    }
+
+    private void initData() {
+
+
     }
 
     @Override
     public void RequestSuccess(User user) {
-        User.DataBean data = user.data;
+       /* User.DataBean data = user.data;
         String nickname = data.nickname;
         String icon = data.icon;
         user1 = user;
 
         ivHead.setImageURI(icon);
-        tvName.setText(nickname);
+        tvName.setText(nickname);*/
+
+        EventBus.getDefault().postSticky(user);
     }
 
     @Override
@@ -102,8 +123,9 @@ public class LeftFragment extends Fragment implements UserView {
     public void onViewClicked() {
     }
 
-    @OnClick({R.id.relativeLayout4, R.id.iv_head, R.id.textView3, R.id.tv_leftname, R.id.imageView6, R.id.imageView3, R.id.relativeLayout5, R.id.imageView2, R.id.relativeLayout6, R.id.imageView4, R.id.relativeLayout7, R.id.imageView5, R.id.relativeLayout8, R.id.imageView7, R.id.ll_shezhi, R.id.relativeLayout10})
-    public void onViewClicked(View view) {
+
+    @Override
+    public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ll_shezhi:
                 Intent intent=new Intent(getContext(), SettingActivity.class);
@@ -111,11 +133,23 @@ public class LeftFragment extends Fragment implements UserView {
                 break;
             case R.id.iv_head:
                 Intent intent1=new Intent(getContext(), ChangeUserActivity.class);
-                EventBus.getDefault().postSticky(user1);
-                System.out.println(user1.msg);
                 startActivity(intent1);
                 break;
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MainThread,sticky = true)
+    public void onEvent(User user){
+        System.out.println(user.data.icon+user.data.nickname);
+        ivHead.setImageURI(user.data.icon);
+        tvName.setText(user.data.nickname);
     }
 }
 

@@ -28,7 +28,7 @@
         <TextView
             android:id="@+id/tv_baocun"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/y40"
+            android:layout_height="@dimen/y30"
             android:gravity="center"
             android:text="保存"
             android:textSize="15sp" />
@@ -41,7 +41,7 @@
         <TextView
             android:id="@+id/tv_bubaocun"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/y40"
+            android:layout_height="@dimen/y30"
             android:layout_alignBottom="@+id/linearLayout2"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
@@ -57,7 +57,7 @@
         android:layout_width="@dimen/x280"
         android:layout_height="@dimen/y30"
         android:layout_below="@+id/linearLayout2"
-        android:layout_marginTop="@dimen/y20"
+        android:layout_marginTop="@dimen/y10"
         android:layout_centerHorizontal="true"
         android:background="@drawable/popw"
         android:gravity="center"

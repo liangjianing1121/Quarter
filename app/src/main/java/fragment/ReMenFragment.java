@@ -38,7 +38,17 @@ public class ReMenFragment extends Fragment implements XBanner.XBannerAdapter, g
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.remenfragment, container, false);
+
+       if(view==null)
+       {
+           view = inflater.inflate(R.layout.remenfragment,null);
+       }
+        ViewGroup parent = (ViewGroup) view.getParent();
+       if(parent!=null)
+       {
+           parent.removeView(view);
+       }
+
         return this.view;
     }
 
@@ -59,7 +69,6 @@ public class ReMenFragment extends Fragment implements XBanner.XBannerAdapter, g
         super.onResume();
         getAdpresenter presenter=new getAdpresenter(getContext(),this);
         presenter.getAd();
-        banner.startAutoPlay();
 
     }
     @Override
@@ -82,9 +91,11 @@ public class ReMenFragment extends Fragment implements XBanner.XBannerAdapter, g
             String icon = dataBean.icon;
             imglist.add(icon);
         }
+        banner.removeAllViews();
         banner.setData(imglist,null);
         banner.setPoinstPosition(XBanner.RIGHT);
         banner.setmAdapter(this);
+        banner.startAutoPlay();
     }
 
     @Override

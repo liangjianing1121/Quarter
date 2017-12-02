@@ -1,6 +1,8 @@
 package model;
 import android.renderscript.AllocationAdapter;
 
+import com.google.gson.Gson;
+
 import bean.Ad;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -18,7 +20,7 @@ public class getAdModel {
     private igetAd igetAd;
 
     public void getAd(){
-        new NetRequestUtils.Builder().addConverterFactories(GsonConverterFactory.create())
+        new NetRequestUtils.Builder().addConverterFactories(GsonConverterFactory.create(new Gson()))
                 .addCallAdapterFactories(RxJava2CallAdapterFactory.create())
                 .build().getApiService().getAd()
                 .subscribeOn(Schedulers.io())

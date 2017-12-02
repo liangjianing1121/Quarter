@@ -23,7 +23,16 @@ public class GuanZhuFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        view = inflater.inflate(R.layout.guanzhufragment, container, false);
+        if(view==null)
+        {
+            view = inflater.inflate(R.layout.guanzhufragment,null);
+        }
+        ViewGroup parent = (ViewGroup) view.getParent();
+        if(parent!=null)
+        {
+            parent.removeView(view);
+        }
+
         return view;
     }
 

@@ -18,6 +18,7 @@ import java.util.Observable;
 import bean.Login;
 import presenter.LoginPresenter;
 import utils.ImmersionUtil;
+import utils.MapUtils;
 import view.LoginView;
 
 public class OtherLoginActivity extends BaseActivity<LoginPresenter> implements LoginView {
@@ -77,6 +78,8 @@ public class OtherLoginActivity extends BaseActivity<LoginPresenter> implements 
 
     @Override
     public void initData() {
+        String sha1 = MapUtils.getSHA1(this);
+        System.out.println(sha1+"++++++++++++++++++++++++++");
 
     }
 

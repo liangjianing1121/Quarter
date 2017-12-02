@@ -21,6 +21,7 @@ import java.util.List;
 
 import base.BasePresenter;
 import bean.User;
+import de.greenrobot.event.EventBus;
 import fragment.Fragment1;
 import fragment.Fragment2;
 import fragment.Fragment3;
@@ -101,15 +102,16 @@ public class HomeActivity extends BaseActivity<UserPresenter> implements UserVie
 
     @Override
     public void initView() {
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_layout,new LeftFragment()).commit();
 
-        Intent intent = getIntent();
+       /* Intent intent = getIntent();
         boolean isYouke = intent.getBooleanExtra("isYouke", false);
         if(!isYouke)
         {
             SharedPreferences uidsp = getSharedPreferences("uid", MODE_PRIVATE);
             int uid = uidsp.getInt("uid", 0);
             presenter.getUser(uid+"");
-        }
+        }*/
 
 
         ImmersionUtil.TransparentStatusbar(this);
@@ -181,6 +183,14 @@ public class HomeActivity extends BaseActivity<UserPresenter> implements UserVie
     public void onResume() {
         super.onResume();
         MobclickAgent.onResume(this);
+        Intent intent = getIntent();
+        boolean isYouke = intent.getBooleanExtra("isYouke", false);
+        if(!isYouke)
+        {
+            SharedPreferences uidsp = getSharedPreferences("uid", MODE_PRIVATE);
+            int uid = uidsp.getInt("uid", 0);
+            presenter.getUser(uid+"");
+        }
     }
     public void onPause() {
         super.onPause();
@@ -203,6 +213,8 @@ public class HomeActivity extends BaseActivity<UserPresenter> implements UserVie
             startActivity(intent);
         }
 
+        EventBus.getDefault().postSticky(user);
+
 
     }
 
@@ -215,4 +227,5 @@ public class HomeActivity extends BaseActivity<UserPresenter> implements UserVie
     public void Failure(User user) {
 
     }
+
 }
