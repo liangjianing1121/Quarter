@@ -11,6 +11,7 @@ import bean.UpLoad;
 import bean.UpdateNickname;
 import bean.User;
 import bean.Version;
+import bean.Videos;
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
 import okhttp3.ResponseBody;
@@ -63,6 +64,11 @@ public interface ApiService {
 
     @POST("quarter/getVersion")
     Observable<Version> getVersion();
+
+    @POST("quarter/getVideos")
+    @FormUrlEncoded
+    Observable<Videos> getVideos(@Field("uid") String uid,@Field("type") String type, @Field("page") String page);
+
 
 
 }

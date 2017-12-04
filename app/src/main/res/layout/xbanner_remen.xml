@@ -4,24 +4,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-
-
-    <com.jcodecraeer.xrecyclerview.XRecyclerView
-        android:id="@+id/xrv"
+    <com.stx.xhb.xbanner.XBanner
+        android:id="@+id/banner"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="@dimen/y100"
+        app:pointsPosition="CENTER"
+        app:AutoPlayTime="3000"
         />
-
-
-
-
-
-
-
-
-
-
-
 
 </RelativeLayout>

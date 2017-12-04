@@ -52,7 +52,7 @@
             android:value="Channel ID" />
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="eacaf3b643052b5c042dc891cbf34ed9"></meta-data>
+            android:value="eacaf3b643052b5c042dc891cbf34ed9" />
 
         <service android:name="com.amap.api.location.APSService" />
         <service
@@ -70,7 +70,8 @@
         <activity android:name=".PulishSuccessActivity" />
         <activity android:name=".SettingActivity" />
         <activity android:name=".ChangeUserActivity" />
-        <activity android:name=".MapActivity"></activity>
+        <activity android:name=".MapActivity" />
+        <activity android:name=".PublishVideoActivity"></activity>
     </application>
 
 </manifest>

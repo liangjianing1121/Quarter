@@ -33,6 +33,7 @@ public class PublishActivity extends BaseActivity {
     @Override
     public void initView() {
         ButterKnife.bind(this);
+        ivShipin.setOnClickListener(this);
 
     }
 
@@ -53,9 +54,16 @@ public class PublishActivity extends BaseActivity {
 
     @Override
     public void Click(View view) {
+        switch (view.getId())
+        {
+            case R.id.iv_shipin:
+                
+                break;
+        }
+
+
 
     }
-
 
 
     @OnClick(R.id.iv_duanzi)
@@ -63,4 +71,13 @@ public class PublishActivity extends BaseActivity {
         startActivity(WriteDuanActivity.class);
 
     }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
+
+
 }
