@@ -71,7 +71,9 @@
         <activity android:name=".SettingActivity" />
         <activity android:name=".ChangeUserActivity" />
         <activity android:name=".MapActivity" />
-        <activity android:name=".PublishVideoActivity"></activity>
+        <activity android:name=".PublishVideoActivity" />
+        <activity android:name=".PublishCoverActivity" />
+        <activity android:name=".YuLanActivity"></activity>
     </application>
 
 </manifest>

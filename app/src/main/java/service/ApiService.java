@@ -6,6 +6,7 @@ import bean.Ad;
 import bean.Duanzi;
 import bean.Login;
 import bean.PublishJoke;
+import bean.PublishVideos;
 import bean.Register;
 import bean.UpLoad;
 import bean.UpdateNickname;
@@ -69,6 +70,9 @@ public interface ApiService {
     @FormUrlEncoded
     Observable<Videos> getVideos(@Field("uid") String uid,@Field("type") String type, @Field("page") String page);
 
+    @POST("quarter/publishVideo")
+    @Multipart
+    Observable<PublishVideos> publishVideo(@Part List<MultipartBody.Part> part);
 
 
 }

@@ -57,7 +57,7 @@ public class PublishActivity extends BaseActivity {
         switch (view.getId())
         {
             case R.id.iv_shipin:
-                
+                startActivity(PublishVideoActivity.class);
                 break;
         }
 

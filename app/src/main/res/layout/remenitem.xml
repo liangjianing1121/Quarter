@@ -161,10 +161,10 @@
         android:ellipsize="end"
         />
 
-    <include
-        layout="@layout/simple_player_view_player"
+    <RelativeLayout
+        android:id="@+id/player"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y150"
+        android:layout_height="@dimen/y130"
         android:layout_below="@+id/tv"
         />
 

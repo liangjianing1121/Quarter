@@ -64,31 +64,31 @@ public class RvAdapter extends RecyclerView.Adapter<RvAdapter.ViewHolder>{
         {
             String[] split = imgUrls.split("\\|");
             int length = split.length;
+            RvAdapter2 rvAdapter2=new RvAdapter2(context,split);
 
             if(length==2||length==4)
             {
                 GridLayoutManager gridLayoutManager=new GridLayoutManager(context,2);
                 gridLayoutManager.setOrientation(GridLayoutManager.VERTICAL);
                 holder.rv_duanzi.setLayoutManager(gridLayoutManager);
-                RvAdapter2 rvAdapter2=new RvAdapter2(context,split);
-                ((ViewHolder) holder).rv_duanzi.setAdapter(rvAdapter2);
+
+
             }
             else if(length==1)
             {
                 GridLayoutManager gridLayoutManager=new GridLayoutManager(context,1);
                 gridLayoutManager.setOrientation(GridLayoutManager.VERTICAL);
                 holder.rv_duanzi.setLayoutManager(gridLayoutManager);
-                RvAdapter2 rvAdapter2=new RvAdapter2(context,split);
-                ((ViewHolder) holder).rv_duanzi.setAdapter(rvAdapter2);
+
             }
             else
             {
                 GridLayoutManager gridLayoutManager=new GridLayoutManager(context,3);
                 gridLayoutManager.setOrientation(GridLayoutManager.VERTICAL);
                 holder.rv_duanzi.setLayoutManager(gridLayoutManager);
-                RvAdapter2 rvAdapter2=new RvAdapter2(context,split);
-                ((ViewHolder) holder).rv_duanzi.setAdapter(rvAdapter2);
+
             }
+            ((ViewHolder) holder).rv_duanzi.setAdapter(rvAdapter2);
         }
         else
         {

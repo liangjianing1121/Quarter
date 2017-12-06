@@ -5,4 +5,6 @@ package bean;
  */
 
 public class PublishVideos {
+    public String msg;
+    public String code;
 }

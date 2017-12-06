@@ -87,6 +87,8 @@ public class ReMenFragment extends Fragment implements XBanner.XBannerAdapter,Ge
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         xrv.setLayoutManager(linearLayoutManager);
+        xrv.setRefreshProgressStyle(18);
+        xrv.setLaodingMoreProgressStyle(14);
     }
 
     @Override
@@ -98,6 +100,7 @@ public class ReMenFragment extends Fragment implements XBanner.XBannerAdapter,Ge
         uid.getInt("uid", 0);
         getVideosPresenter.getVideos(uid1+"",1+"",i+"");
         getVideosPresenter.getAd();
+
 
     }
     @Override
@@ -192,7 +195,7 @@ public class ReMenFragment extends Fragment implements XBanner.XBannerAdapter,Ge
         banner.setPoinstPosition(XBanner.RIGHT);
         banner.setmAdapter(this);
 
-        Toast.makeText(getActivity(), ad.data.size()+"", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getActivity(), ad.data.size()+"", Toast.LENGTH_SHORT).show();
     }
 
 
