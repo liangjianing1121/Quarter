@@ -5,8 +5,6 @@ import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentSender;
-import android.sax.StartElementListener;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,28 +17,23 @@ import com.bumptech.glide.Glide;
 import com.dou361.ijkplayer.listener.OnShowThumbnailListener;
 import com.dou361.ijkplayer.widget.PlayStateParams;
 import com.dou361.ijkplayer.widget.PlayerView;
-import com.example.dell.quarter.HomeActivity;
 import com.example.dell.quarter.R;
 import com.example.dell.quarter.UserVideoActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.List;
 
+import bean.User;
 import bean.UserVideos;
-import bean.Videos;
 import de.greenrobot.event.EventBus;
-import fragment.Fragment1;
-import fragment.Fragment2;
-import fragment.ReMenFragment;
 
 /**
- * Created by DELL on 2017/12/2.
+ * Created by DELL on 2017/12/6.
  */
 
-public class ReMenAdapter  extends RecyclerView.Adapter<ReMenAdapter.ViewHolder> {
-    private Activity context;
-    private List<Videos.DataBean> list;
-
+public class UserVideoAdapter extends RecyclerView.Adapter<UserVideoAdapter.ViewHolder> {
+    private Context context;
+    private List<UserVideos.DataBean> list;
 
     private ObjectAnimator rotation;
     private ObjectAnimator animator1;
@@ -51,31 +44,36 @@ public class ReMenAdapter  extends RecyclerView.Adapter<ReMenAdapter.ViewHolder>
     private ObjectAnimator fanimator2;
     private ObjectAnimator fanimator3;
 
-    public ReMenAdapter(Activity context, List<Videos.DataBean> list) {
+    private User user;
+
+
+
+    public UserVideoAdapter(Context context, List<UserVideos.DataBean> list,User user) {
         this.context = context;
         this.list = list;
+        this.user=user;
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = View.inflate(context, R.layout.remenitem, null);
+        View view = View.inflate(context, R.layout.uservideo_item, null);
         ViewHolder holder=new ViewHolder(view);
         return holder;
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, final int position) {
+    public void onBindViewHolder(final UserVideoAdapter.ViewHolder holder, final int position) {
         holder.setIsRecyclable(false);
-        holder.iv.setImageURI(list.get(position).user.icon);
+        holder.iv.setImageURI(user.data.icon);
         holder.tv_date.setText(list.get(position).createTime);
-        String nickname = (String) list.get(position).user.nickname;
-        holder.tv_name.setText(nickname);
+        holder.tv_name.setText(user.data.nickname);
+
 
         View player = View.inflate(context, R.layout.simple_player_view_player, holder.player);
         String videoUrl = list.get(position).videoUrl;
         String replace = videoUrl.replace("https://www.zhaoapi.cn", "http://120.27.23.105");
 
-        PlayerView playerView = new PlayerView(context,player)
+        PlayerView playerView = new PlayerView((Activity) context,player)
                 .setTitle(list.get(position).workDesc)
                 .setScaleType(PlayStateParams.fitparent)
                 .forbidTouch(false)
@@ -84,9 +82,9 @@ public class ReMenAdapter  extends RecyclerView.Adapter<ReMenAdapter.ViewHolder>
                     @Override
                     public void onShowThumbnail(ImageView ivThumbnail) {
                         Glide.with(context).load(list.get(position).cover).into(ivThumbnail);
-                }
+                    }
                 })
-               ;
+                ;
         //隐藏返回键，true 隐藏，false 为显示
         playerView.hideBack(true);
         //隐藏菜单键，true 隐藏，false 为显示

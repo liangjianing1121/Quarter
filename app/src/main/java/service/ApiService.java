@@ -4,6 +4,7 @@ import java.util.List;
 
 import bean.Ad;
 import bean.Duanzi;
+import bean.Follow;
 import bean.Login;
 import bean.PublishJoke;
 import bean.PublishVideos;
@@ -11,6 +12,7 @@ import bean.Register;
 import bean.UpLoad;
 import bean.UpdateNickname;
 import bean.User;
+import bean.UserVideos;
 import bean.Version;
 import bean.Videos;
 import io.reactivex.Observable;
@@ -75,4 +77,12 @@ public interface ApiService {
     Observable<PublishVideos> publishVideo(@Part List<MultipartBody.Part> part);
 
 
+    @POST("quarter/getUserVideos")
+    @FormUrlEncoded
+    Observable<UserVideos> getUserVideos(@Field("uid") String uid, @Field("page") String page);
+
+
+    @POST("quarter/follow")
+    @FormUrlEncoded
+    Observable<Follow> geteFollow(@Field("uid") String uid,@Field("followid") String followid);
 }

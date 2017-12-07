@@ -4,11 +4,20 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/iv"
+        android:id="@+id/iv111"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y100"
+        android:layout_height="@dimen/y200"
         android:scaleType="fitCenter"
         android:padding="@dimen/x5"
+        android:visibility="gone"
+        />
+    <ImageView
+        android:id="@+id/iv222"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y100"
+        android:scaleType="fitXY"
+        android:padding="@dimen/x5"
+        android:visibility="gone"
         />
 
 </RelativeLayout>

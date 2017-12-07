@@ -32,7 +32,16 @@ public class RvAdapter2 extends RecyclerView.Adapter<RvAdapter2.ViewHolder>  {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Glide.with(context).load(img[position]).asGif().into(holder.iv);
+
+        if(img.length==1){
+            holder.iv.setVisibility(View.VISIBLE);
+            Glide.with(context).load(img[position]).into(holder.iv);
+        }else{
+            holder.iv2.setVisibility(View.VISIBLE);
+            Glide.with(context).load(img[position]).into(holder.iv2);
+        }
+
+
     }
 
     @Override
@@ -43,10 +52,11 @@ public class RvAdapter2 extends RecyclerView.Adapter<RvAdapter2.ViewHolder>  {
     public class  ViewHolder extends RecyclerView.ViewHolder {
 
         private final ImageView iv;
-
+        private final ImageView iv2;
         public ViewHolder(View itemView) {
             super(itemView);
-            iv = itemView.findViewById(R.id.iv);
+            iv = itemView.findViewById(R.id.iv111);
+            iv2 = itemView.findViewById(R.id.iv222);
         }
     }
 }
