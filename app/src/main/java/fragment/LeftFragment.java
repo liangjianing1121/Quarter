@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.util.EventLog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.dell.quarter.ChangeUserActivity;
+import com.example.dell.quarter.MyApp;
+import com.example.dell.quarter.MyZuoPinActivity;
 import com.example.dell.quarter.R;
 import com.example.dell.quarter.SettingActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -45,6 +48,7 @@ public class LeftFragment extends Fragment implements UserView, View.OnClickList
     private LinearLayout llShezhi;
 
     private View view;
+    private LinearLayout ll_zuopin;
 
     @Nullable
     @Override
@@ -84,10 +88,12 @@ public class LeftFragment extends Fragment implements UserView, View.OnClickList
       ivHead = view.findViewById(R.id.iv_head);
       tvName=view.findViewById(R.id.tv_leftname);
       llShezhi = view.findViewById(R.id.ll_shezhi);
+      ll_zuopin = view.findViewById(R.id.ll_zuopin);
 
 
-      ivHead.setOnClickListener(this);
+        ivHead.setOnClickListener(this);
       llShezhi.setOnClickListener(this);
+      ll_zuopin.setOnClickListener(this);
     }
 
     private void initData() {
@@ -118,12 +124,6 @@ public class LeftFragment extends Fragment implements UserView, View.OnClickList
 
     }
 
-
-    @OnClick(R.id.ll_shezhi)
-    public void onViewClicked() {
-    }
-
-
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -134,6 +134,10 @@ public class LeftFragment extends Fragment implements UserView, View.OnClickList
             case R.id.iv_head:
                 Intent intent1=new Intent(getContext(), ChangeUserActivity.class);
                 startActivity(intent1);
+                break;
+            case R.id.ll_zuopin:
+                Intent intent2=new Intent(getContext(), MyZuoPinActivity.class);
+                startActivity(intent2);
                 break;
         }
     }

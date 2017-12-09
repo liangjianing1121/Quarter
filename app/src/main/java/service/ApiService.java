@@ -5,6 +5,7 @@ import java.util.List;
 import bean.Ad;
 import bean.Duanzi;
 import bean.Follow;
+import bean.HotVideo;
 import bean.Login;
 import bean.PublishJoke;
 import bean.PublishVideos;
@@ -20,6 +21,8 @@ import okhttp3.MultipartBody;
 import okhttp3.ResponseBody;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.HEAD;
+import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -38,7 +41,7 @@ public interface ApiService {
     @FormUrlEncoded
     Observable<Register> getRegister(@Field("mobile") String mobile, @Field("password") String password);
 
-
+    @Headers("Cache-Control: public, max-age=3600")
     @POST("user/getUserInfo")
     @FormUrlEncoded
     Observable<User> getUser(@Field("uid") String uid);
@@ -50,8 +53,6 @@ public interface ApiService {
     @POST("quarter/publishJoke")
     @Multipart
     Observable<PublishJoke> updateJoke(@Part List<MultipartBody.Part> part);
-
-
 
     @POST("user/updateNickName")
     @FormUrlEncoded
@@ -77,6 +78,7 @@ public interface ApiService {
     Observable<PublishVideos> publishVideo(@Part List<MultipartBody.Part> part);
 
 
+    @Headers("Cache-Control: public, max-age=3600")
     @POST("quarter/getUserVideos")
     @FormUrlEncoded
     Observable<UserVideos> getUserVideos(@Field("uid") String uid, @Field("page") String page);
@@ -85,4 +87,9 @@ public interface ApiService {
     @POST("quarter/follow")
     @FormUrlEncoded
     Observable<Follow> geteFollow(@Field("uid") String uid,@Field("followid") String followid);
+
+
+    @POST("quarter/getHotVideos")
+    @FormUrlEncoded
+    Observable<HotVideo> getHotVideo(@Field("page") String page);
 }

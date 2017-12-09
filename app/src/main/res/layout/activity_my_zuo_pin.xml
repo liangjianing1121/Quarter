@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.dell.quarter.MyZuoPinActivity">
+
+    <RelativeLayout
+        android:id="@+id/include"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y25"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:background="#03A9F4">
+
+        <TextView
+            android:id="@+id/tv_fanhui"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/x5"
+            android:layout_marginTop="@dimen/y5"
+            android:text="返回"
+            android:textColor="#fff" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/y5"
+            android:text="我的作品"
+            android:textColor="#ffffff" />
+
+    </RelativeLayout>
+
+
+
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tablayout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y20"
+        app:tabGravity="fill"
+        app:tabSelectedTextColor="#29B6F6"
+        app:tabTextColor="#000000"
+        app:tabMode="fixed"
+        app:tabIndicatorColor="#29B6F6"
+        android:layout_centerHorizontal="true"
+        app:tabIndicatorHeight="@dimen/x4"
+        android:layout_marginTop="@dimen/y25"
+        />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="@dimen/y45"/>
+
+
+
+</RelativeLayout>

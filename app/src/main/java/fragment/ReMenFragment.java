@@ -65,7 +65,6 @@ public class ReMenFragment extends Fragment implements XBanner.XBannerAdapter,Ge
        {
            parent.removeView(view);
        }
-
         return view;
     }
 
@@ -83,8 +82,6 @@ public class ReMenFragment extends Fragment implements XBanner.XBannerAdapter,Ge
         View xbanner = View.inflate(getActivity(), R.layout.xbanner_remen, null);
         banner = xbanner.findViewById(R.id.banner);
         xrv.addHeaderView(xbanner);
-
-
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         xrv.setLayoutManager(linearLayoutManager);
@@ -92,6 +89,27 @@ public class ReMenFragment extends Fragment implements XBanner.XBannerAdapter,Ge
         xrv.setLaodingMoreProgressStyle(14);
         xrv.setLoadingMoreEnabled(true);
         xrv.setPullRefreshEnabled(true);
+        xrv.setLoadingListener(new XRecyclerView.LoadingListener() {
+            @Override
+            public void onRefresh() {
+                list.clear();
+                SharedPreferences uid = getActivity().getSharedPreferences("uid", Context.MODE_PRIVATE);
+                int uid1 = uid.getInt("uid", 0);
+                uid.getInt("uid", 0);
+                getVideosPresenter.getVideos(uid1+"",1+"",1+"");
+                xrv.refreshComplete();
+            }
+
+            @Override
+            public void onLoadMore() {
+                i++;
+                SharedPreferences uid = getActivity().getSharedPreferences("uid", Context.MODE_PRIVATE);
+                int uid1 = uid.getInt("uid", 0);
+                uid.getInt("uid", 0);
+                getVideosPresenter.getVideos(uid1+"",1+"",i+"");
+                xrv.loadMoreComplete();
+            }
+        });
     }
 
     @Override
@@ -150,27 +168,7 @@ public class ReMenFragment extends Fragment implements XBanner.XBannerAdapter,Ge
             reMenAdapter.notifyDataSetChanged();
         }
 
-        xrv.setLoadingListener(new XRecyclerView.LoadingListener() {
-            @Override
-            public void onRefresh() {
-                list.clear();
-                SharedPreferences uid = getActivity().getSharedPreferences("uid", Context.MODE_PRIVATE);
-                int uid1 = uid.getInt("uid", 0);
-                uid.getInt("uid", 0);
-                getVideosPresenter.getVideos(uid1+"",1+"",1+"");
-                xrv.refreshComplete();
-            }
 
-            @Override
-            public void onLoadMore() {
-                i++;
-                SharedPreferences uid = getActivity().getSharedPreferences("uid", Context.MODE_PRIVATE);
-                int uid1 = uid.getInt("uid", 0);
-                uid.getInt("uid", 0);
-                getVideosPresenter.getVideos(uid1+"",1+"",i+"");
-                xrv.loadMoreComplete();
-            }
-        });
 
   /*  xrv.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override

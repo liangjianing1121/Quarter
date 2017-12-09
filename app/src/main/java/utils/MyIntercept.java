@@ -9,12 +9,17 @@ import com.example.dell.quarter.MyApp;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Logger;
 
+import okhttp3.CacheControl;
 import okhttp3.FormBody;
 import okhttp3.Interceptor;
 import okhttp3.MultipartBody;
 import okhttp3.Request;
 import okhttp3.Response;
+
+import static android.content.ContentValues.TAG;
+import static com.example.dell.quarter.MyApp.context;
 
 /**
  * Created by DELL on 2017/11/27.
@@ -27,19 +32,22 @@ public class MyIntercept implements Interceptor {
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
+
+
+
         if(request.method().equals("POST"))
         {
-            SharedPreferences token = MyApp.context.getSharedPreferences("token", Context.MODE_PRIVATE);
+            SharedPreferences token = context.getSharedPreferences("token", Context.MODE_PRIVATE);
             String token1 = token.getString("token", "");
 
             if(request.body() instanceof FormBody)
             {
                 System.out.println("开始添加公共参数");
 
-                PackageManager pm = MyApp.context.getPackageManager();
+                PackageManager pm = context.getPackageManager();
                 PackageInfo pi = null;
                 try {
-                    pi = pm.getPackageInfo(MyApp.context.getPackageName(), 0);
+                    pi = pm.getPackageInfo(context.getPackageName(), 0);
 
                     versionCode = pi.versionCode;
                 } catch (PackageManager.NameNotFoundException e) {

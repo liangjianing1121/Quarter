@@ -65,7 +65,7 @@ public class ReMenAdapter  extends RecyclerView.Adapter<ReMenAdapter.ViewHolder>
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        holder.setIsRecyclable(false);
+        //holder.setIsRecyclable(false);
         holder.iv.setImageURI(list.get(position).user.icon);
         holder.tv_date.setText(list.get(position).createTime);
         String nickname = (String) list.get(position).user.nickname;

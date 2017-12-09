@@ -74,7 +74,9 @@
         <activity android:name=".PublishVideoActivity" />
         <activity android:name=".PublishCoverActivity" />
         <activity android:name=".YuLanActivity" />
-        <activity android:name=".UserVideoActivity"></activity>
+        <activity android:name=".UserVideoActivity" />
+        <activity android:name=".MyZuoPinActivity" />
+        <activity android:name=".VideoActivity"></activity>
     </application>
 
 </manifest>
