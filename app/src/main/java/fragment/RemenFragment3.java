@@ -68,17 +68,14 @@ public class RemenFragment3 extends Fragment implements GetHotVideoView {
 
     private void initData() {
         list=new ArrayList<>();
-        xrv.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         xrv.setPullRefreshEnabled(true);
         xrv.setLoadingMoreEnabled(true);
-
-
+        xrv.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
 
     }
 
     private void initView() {
         xrv = view.findViewById(R.id.xrv);
-
     }
 
     
@@ -94,8 +91,7 @@ public class RemenFragment3 extends Fragment implements GetHotVideoView {
     @Override
     public void RequestSuccess(HotVideo hotVideo) {
         Toast.makeText(getContext(), hotVideo.msg, Toast.LENGTH_SHORT).show();
-        List<HotVideo.DataBean> data = hotVideo.data;
-        list.addAll(data);
+        list.addAll(hotVideo.data);
         if(reMen3Adapter==null)
         {
             reMen3Adapter = new ReMen3Adapter(getContext(),list);
@@ -112,9 +108,7 @@ public class RemenFragment3 extends Fragment implements GetHotVideoView {
                 list.clear();
                 presenter.getHotVideo(1+"");
                 xrv.refreshComplete();
-
             }
-
             @Override
             public void onLoadMore() {
                 i++;

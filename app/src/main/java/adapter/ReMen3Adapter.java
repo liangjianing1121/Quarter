@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bean.HotVideo;
+import bean.Videos;
 import utils.ClearCacheUtils;
 
 
@@ -34,14 +35,14 @@ import utils.ClearCacheUtils;
 
 public class ReMen3Adapter  extends RecyclerView.Adapter<ReMen3Adapter.ViewHolder> {
     private Context context;
-    private  List<HotVideo.DataBean> list;
+    private  List<HotVideo.DataBean> data;
     private List<Integer> mHeights;
 
-    public ReMen3Adapter(Context context, List<HotVideo.DataBean> list) {
+    public ReMen3Adapter(Context context, List<HotVideo.DataBean> data) {
         this.context = context;
-        this.list = list;
+        this.data = data;
         mHeights = new ArrayList<>();
-        for(int i=0; i < list.size();i++){
+        for(int i=0; i < data.size();i++){
             //随机的获取一个范围为200-600直接的高度
             mHeights.add((int)(200+Math.random()*400));
         }
@@ -58,27 +59,30 @@ public class ReMen3Adapter  extends RecyclerView.Adapter<ReMen3Adapter.ViewHolde
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
         ViewGroup.LayoutParams layoutParams = holder.itemView.getLayoutParams();
-        layoutParams.height = mHeights.get(position);
+        try {
+            layoutParams.height = mHeights.get(position);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         holder.itemView.setLayoutParams(layoutParams);
-        Glide.with(context).load(list.get(position).cover).centerCrop().into(holder.iv);
+        Glide.with(context).load(data.get(position).cover).centerCrop().into(holder.iv);
         holder.iv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(context, VideoActivity.class);
-                String videoUrl = list.get(position).videoUrl;
+                String videoUrl = data.get(position).videoUrl;
                 intent.putExtra("videourl",videoUrl);
-                String icon = list.get(position).user.icon;
+                String icon = data.get(position).user.icon;
                 intent.putExtra("icon",icon);
-                String workDesc = list.get(position).workDesc;
+                String workDesc = data.get(position).workDesc;
                 intent.putExtra("desc",workDesc);
                 context.startActivity(intent);
             }
         });
     }
-
     @Override
     public int getItemCount() {
-        return list.size();
+        return data.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -91,7 +95,17 @@ public class ReMen3Adapter  extends RecyclerView.Adapter<ReMen3Adapter.ViewHolde
         }
     }
 
-
-
-
+    public void refreshData(List<HotVideo.DataBean> list){
+        if(data != null){
+            data.clear();
+            data.addAll(list);
+            notifyDataSetChanged();
+        }
+    }
+    public void loadmoreData(List<HotVideo.DataBean> list){
+        if(data != null){
+            data.addAll(list);
+            notifyDataSetChanged();
+        }
+    }
 }

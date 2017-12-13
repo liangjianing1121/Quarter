@@ -1,11 +1,14 @@
 package utils;
 
+import com.example.dell.quarter.MyApp;
 import com.facebook.drawee.debug.DebugControllerOverlayDrawable;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import common.BaseUrl;
+import okhttp3.Cache;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import retrofit2.CallAdapter;
@@ -22,6 +25,8 @@ import service.ApiService;
 public class NetRequestUtils {
     private ApiService apiService;
     private static NetRequestUtils mInstance;
+
+
 
 
     public NetRequestUtils(ApiService apiService) {
@@ -48,8 +53,16 @@ public class NetRequestUtils {
         }
 
         public NetRequestUtils build(){
+            long SIZE_OF_CACHE = 10 * 1024 * 1024; // 10 MiB
+
+            String cacheFile = MyApp.context.getCacheDir()+"/http";
+            Cache cache = new Cache(new File(cacheFile), SIZE_OF_CACHE);
             OkHttpClient.Builder okBuilder=new OkHttpClient.Builder();
-            okBuilder.addInterceptor(new MyIntercept());
+            okBuilder.addInterceptor(new MyIntercept())
+            .addNetworkInterceptor(MyGetIntercept.REWRITE_RESPONSE_INTERCEPTOR)
+            .addInterceptor(MyGetIntercept.REWRITE_RESPONSE_INTERCEPTOR_OFFLINE)
+            .cache(cache)
+            .build();
             Retrofit.Builder builder=new Retrofit.Builder().baseUrl(BaseUrl.BASE_URL)
                     .client(okBuilder.build());
 

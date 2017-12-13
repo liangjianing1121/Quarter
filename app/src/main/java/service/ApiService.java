@@ -3,10 +3,13 @@ package service;
 import java.util.List;
 
 import bean.Ad;
+import bean.AddFavorite;
+import bean.BaseBean;
 import bean.Duanzi;
 import bean.Follow;
 import bean.HotVideo;
 import bean.Login;
+import bean.Praise;
 import bean.PublishJoke;
 import bean.PublishVideos;
 import bean.Register;
@@ -21,6 +24,7 @@ import okhttp3.MultipartBody;
 import okhttp3.ResponseBody;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.HEAD;
 import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
@@ -41,14 +45,20 @@ public interface ApiService {
     @FormUrlEncoded
     Observable<Register> getRegister(@Field("mobile") String mobile, @Field("password") String password);
 
-    @Headers("Cache-Control: public, max-age=3600")
+
     @POST("user/getUserInfo")
     @FormUrlEncoded
     Observable<User> getUser(@Field("uid") String uid);
 
-    @POST("quarter/getJokes")
+  /*  @POST("quarter/getJokes")
     @FormUrlEncoded
-    Observable<Duanzi> getduanlist(@Field("page") String page);
+    Observable<Duanzi> getduanlist(@Field("page") String page);*/
+
+
+    @Headers("cache:20")
+    @GET("quarter/getJokes")
+    Observable<Duanzi> getduanlist(@Query("page") String page);
+
 
     @POST("quarter/publishJoke")
     @Multipart
@@ -58,9 +68,13 @@ public interface ApiService {
     @FormUrlEncoded
     Observable<UpdateNickname> updatenickname(@Field("uid") String uid , @Field("nickname") String nickname);
 
-    @POST("quarter/getAd")
+    /*@POST("quarter/getAd")
     Observable<Ad> getAd();
+*/
 
+    @Headers("cache:20")
+    @GET("quarter/getAd")
+    Observable<Ad> getAd();
 
     @POST("file/upload")
     @Multipart
@@ -69,16 +83,19 @@ public interface ApiService {
     @POST("quarter/getVersion")
     Observable<Version> getVersion();
 
-    @POST("quarter/getVideos")
+    /*@POST("quarter/getVideos")
     @FormUrlEncoded
     Observable<Videos> getVideos(@Field("uid") String uid,@Field("type") String type, @Field("page") String page);
+*/
+
+    @Headers("cache:20")
+    @GET("quarter/getVideos")
+    Observable<Videos> getVideos(@Query("uid") String uid,@Query("type") String type, @Query("page") String page);
 
     @POST("quarter/publishVideo")
     @Multipart
     Observable<PublishVideos> publishVideo(@Part List<MultipartBody.Part> part);
 
-
-    @Headers("Cache-Control: public, max-age=3600")
     @POST("quarter/getUserVideos")
     @FormUrlEncoded
     Observable<UserVideos> getUserVideos(@Field("uid") String uid, @Field("page") String page);
@@ -89,7 +106,34 @@ public interface ApiService {
     Observable<Follow> geteFollow(@Field("uid") String uid,@Field("followid") String followid);
 
 
-    @POST("quarter/getHotVideos")
+    /*@POST("quarter/getHotVideos")
     @FormUrlEncoded
-    Observable<HotVideo> getHotVideo(@Field("page") String page);
+    Observable<HotVideo> getHotVideo(@Field("page") String page);*/
+
+    @Headers("cache:20")
+    @GET("quarter/getHotVideos")
+    Observable<HotVideo> getHotVideo(@Query("page") String page);
+
+    @POST("quarter/praise")
+    @FormUrlEncoded
+    Observable<Praise> getPraise(@Field("uid") String uid,@Field("wid") String wid);
+
+    @POST("quarter/addFavorite")
+    @FormUrlEncoded
+    Observable<AddFavorite> addFavorite(@Field("uid") String uid,@Field("wid") String wid);
+
+    @POST("quarter/cancelFavorite")
+    @FormUrlEncoded
+    Observable<AddFavorite> cancelFavorite(@Field("uid") String uid,@Field("wid") String wid);
+
+    @POST("quarter/comment")
+    @FormUrlEncoded
+    Observable<BaseBean> comment(@Field("uid") String uid,@Field("wid") String wid, @Field("content") String content);
+
+    
+
+
+
+
+
 }

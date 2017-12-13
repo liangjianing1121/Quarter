@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.PagerAdapter;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -82,22 +83,21 @@ public class ReMenFragment extends Fragment implements XBanner.XBannerAdapter,Ge
         View xbanner = View.inflate(getActivity(), R.layout.xbanner_remen, null);
         banner = xbanner.findViewById(R.id.banner);
         xrv.addHeaderView(xbanner);
+        xrv.setLoadingMoreEnabled(true);
+        xrv.setPullRefreshEnabled(true);
         LinearLayoutManager linearLayoutManager=new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         xrv.setLayoutManager(linearLayoutManager);
         xrv.setRefreshProgressStyle(18);
         xrv.setLaodingMoreProgressStyle(14);
-        xrv.setLoadingMoreEnabled(true);
-        xrv.setPullRefreshEnabled(true);
         xrv.setLoadingListener(new XRecyclerView.LoadingListener() {
             @Override
             public void onRefresh() {
-                list.clear();
                 SharedPreferences uid = getActivity().getSharedPreferences("uid", Context.MODE_PRIVATE);
                 int uid1 = uid.getInt("uid", 0);
                 uid.getInt("uid", 0);
-                getVideosPresenter.getVideos(uid1+"",1+"",1+"");
-                xrv.refreshComplete();
+                i=1;
+                getVideosPresenter.getVideos(uid1+"",1+"",i+"");
             }
 
             @Override
@@ -107,7 +107,6 @@ public class ReMenFragment extends Fragment implements XBanner.XBannerAdapter,Ge
                 int uid1 = uid.getInt("uid", 0);
                 uid.getInt("uid", 0);
                 getVideosPresenter.getVideos(uid1+"",1+"",i+"");
-                xrv.loadMoreComplete();
             }
         });
     }
@@ -119,6 +118,7 @@ public class ReMenFragment extends Fragment implements XBanner.XBannerAdapter,Ge
         SharedPreferences uid = getActivity().getSharedPreferences("uid", Context.MODE_PRIVATE);
         int uid1 = uid.getInt("uid", 0);
         uid.getInt("uid", 0);
+        getVideosPresenter.getVideos(uid1+"",1+"",i+"");
         getVideosPresenter.getVideos(uid1+"",1+"",i+"");
         getVideosPresenter.getAd();
 
@@ -156,35 +156,26 @@ public class ReMenFragment extends Fragment implements XBanner.XBannerAdapter,Ge
     @Override
     public void getVideoSuccess(Videos videos) {
         List<Videos.DataBean> data = videos.data;
-        list.addAll(data);
-
         if(reMenAdapter==null)
         {
             reMenAdapter=new ReMenAdapter(getActivity(),data);
             xrv.setAdapter(reMenAdapter);
         }
+        if(i==1)
+        {
+            reMenAdapter.refreshData(data);
+            xrv.refreshComplete();
+        }
         else
         {
-            reMenAdapter.notifyDataSetChanged();
+            reMenAdapter.loadmoreData(data);
+            xrv.loadMoreComplete();
         }
-
-
-
-  /*  xrv.setOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-
-            }
-        });
-*/
-
     }
 
     @Override
     public void getVideoFailure(Videos videos) {
         Toast.makeText(getActivity(), videos.msg, Toast.LENGTH_SHORT).show();
-
     }
 
     /**
@@ -201,11 +192,9 @@ public class ReMenFragment extends Fragment implements XBanner.XBannerAdapter,Ge
             imglist.add(icon);
         }
         banner.removeAllViews();
-        banner.setData(imglist,null);
+        banner.setData(imglist, null);
         banner.setPoinstPosition(XBanner.RIGHT);
         banner.setmAdapter(this);
-
-        //Toast.makeText(getActivity(), ad.data.size()+"", Toast.LENGTH_SHORT).show();
     }
 
 

@@ -3,9 +3,11 @@ package adapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
+import android.app.Presentation;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.content.SharedPreferences;
 import android.sax.StartElementListener;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -14,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.dou361.ijkplayer.listener.OnShowThumbnailListener;
@@ -24,23 +27,27 @@ import com.example.dell.quarter.R;
 import com.example.dell.quarter.UserVideoActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import bean.AddFavorite;
+import bean.Praise;
 import bean.UserVideos;
 import bean.Videos;
 import de.greenrobot.event.EventBus;
 import fragment.Fragment1;
 import fragment.Fragment2;
 import fragment.ReMenFragment;
+import presenter.PraisePresenter;
+import view.PraiseView;
 
 /**
  * Created by DELL on 2017/12/2.
  */
 
-public class ReMenAdapter  extends RecyclerView.Adapter<ReMenAdapter.ViewHolder> {
+public class ReMenAdapter  extends RecyclerView.Adapter<ReMenAdapter.ViewHolder> implements PraiseView {
     private Activity context;
-    private List<Videos.DataBean> list;
-
+    private List<Videos.DataBean> data;
 
     private ObjectAnimator rotation;
     private ObjectAnimator animator1;
@@ -50,10 +57,11 @@ public class ReMenAdapter  extends RecyclerView.Adapter<ReMenAdapter.ViewHolder>
     private ObjectAnimator fanimator1;
     private ObjectAnimator fanimator2;
     private ObjectAnimator fanimator3;
+    private PraisePresenter praisePresenter;
 
-    public ReMenAdapter(Activity context, List<Videos.DataBean> list) {
+    public ReMenAdapter(Activity context, List<Videos.DataBean> data) {
         this.context = context;
-        this.list = list;
+        this.data = data;
     }
 
     @Override
@@ -65,25 +73,27 @@ public class ReMenAdapter  extends RecyclerView.Adapter<ReMenAdapter.ViewHolder>
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        //holder.setIsRecyclable(false);
-        holder.iv.setImageURI(list.get(position).user.icon);
-        holder.tv_date.setText(list.get(position).createTime);
-        String nickname = (String) list.get(position).user.nickname;
+        praisePresenter = new PraisePresenter(this);
+        holder.setIsRecyclable(false);
+
+        holder.iv.setImageURI(data.get(position).user.icon);
+        holder.tv_date.setText(data.get(position).createTime);
+        String nickname = (String) data.get(position).user.nickname;
         holder.tv_name.setText(nickname);
 
         View player = View.inflate(context, R.layout.simple_player_view_player, holder.player);
-        String videoUrl = list.get(position).videoUrl;
+        String videoUrl = data.get(position).videoUrl;
         String replace = videoUrl.replace("https://www.zhaoapi.cn", "http://120.27.23.105");
 
         PlayerView playerView = new PlayerView(context,player)
-                .setTitle(list.get(position).workDesc)
+                .setTitle(data.get(position).workDesc)
                 .setScaleType(PlayStateParams.fitparent)
                 .forbidTouch(false)
                 .setPlaySource(replace)
                 .showThumbnail(new OnShowThumbnailListener() {
                     @Override
                     public void onShowThumbnail(ImageView ivThumbnail) {
-                        Glide.with(context).load(list.get(position).cover).into(ivThumbnail);
+                        Glide.with(context).load(data.get(position).cover).into(ivThumbnail);
                 }
                 })
                ;
@@ -111,7 +121,7 @@ public class ReMenAdapter  extends RecyclerView.Adapter<ReMenAdapter.ViewHolder>
             public void onClick(View view) {
                 Intent intent=new Intent(context, UserVideoActivity.class);
                 context.startActivity(intent);
-                EventBus.getDefault().postSticky(list.get(position));
+                EventBus.getDefault().postSticky(data.get(position));
             }
         });
 
@@ -160,16 +170,120 @@ public class ReMenAdapter  extends RecyclerView.Adapter<ReMenAdapter.ViewHolder>
                 holder.tv1.setVisibility(View.GONE);
                 holder.tv2.setVisibility(View.GONE);
                 holder.tv3.setVisibility(View.GONE);
+
             }
         });
 
 
 
+
+        holder.iv_xihuan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences uid = context.getSharedPreferences("uid", Context.MODE_PRIVATE);
+                int uid1 = uid.getInt("uid", 0);
+                praisePresenter.getPraise(uid1+"",data.get(position).wid+"");
+                holder.iv_xihuan.setImageResource(R.drawable.hongxin);
+                holder.tv_xihuan.setText(data.get(position).praiseNum+"");
+            }
+        });
+
+        holder.iv_shoucang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences uid = context.getSharedPreferences("uid", Context.MODE_PRIVATE);
+                int uid1 = uid.getInt("uid", 0);
+                praisePresenter.addFavorite(uid1+"",data.get(position).wid+"");
+                //holder.iv_shoucang.setImageResource(R.drawable.shoucanghuang);
+                holder.iv_shoucang.setVisibility(View.GONE);
+                holder.iv_shoucang1.setVisibility(View.VISIBLE);
+                holder.tv_shoucang.setText(data.get(position).favoriteNum+"");
+
+
+            }
+        });
+
+        holder.iv_shoucang1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SharedPreferences uid = context.getSharedPreferences("uid", Context.MODE_PRIVATE);
+                int uid1 = uid.getInt("uid", 0);
+                praisePresenter.cancelFavorite(uid1+"",data.get(position).wid+"");
+
+                holder.iv_shoucang.setVisibility(View.VISIBLE);
+                holder.iv_shoucang1.setVisibility(View.GONE);
+                holder.tv_shoucang.setText(data.get(position).favoriteNum+"");
+            }
+        });
     }
+
     @Override
     public int getItemCount() {
-        return list.size();
+        return data.size();
     }
+
+
+    /**
+     * BaseView返回的方法
+     * @param o
+     */
+
+    @Override
+    public void RequestSuccess(Object o) {
+
+    }
+
+    @Override
+    public void RequestFailure(Object o) {
+
+    }
+
+    @Override
+    public void Failure(Object o) {
+
+    }
+
+    /**
+     * 喜欢返回的方法
+     * @param praise
+     */
+
+    @Override
+    public void getPraiseSuccess(Praise praise) {
+        Toast.makeText(context,praise.msg, Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void getPariesFailure(Praise praise) {
+        Toast.makeText(context,praise.msg, Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * 收藏返回的方法
+     * @param addFavorite
+     */
+
+    @Override
+    public void addFavoriteSuccess(AddFavorite addFavorite) {
+        Toast.makeText(context,addFavorite.msg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void addFavoriteFailure(AddFavorite addFavorite) {
+        Toast.makeText(context,addFavorite.msg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void cancelFavoriteSuccess(AddFavorite addFavorite) {
+        Toast.makeText(context,addFavorite.msg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void cancelFavoriteFailure(AddFavorite addFavorite) {
+        Toast.makeText(context,addFavorite.msg, Toast.LENGTH_SHORT).show();
+    }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -186,6 +300,12 @@ public class ReMenAdapter  extends RecyclerView.Adapter<ReMenAdapter.ViewHolder>
         private final LinearLayout iv_animation1;
         private final LinearLayout iv_animation2;
         private final LinearLayout iv_animation3;
+        private final ImageView iv_xihuan;
+        private final TextView tv_xihuan;
+        private final ImageView iv_shoucang;
+        private final TextView tv_shoucang;
+        private final ImageView iv_shoucang1;
+
         public ViewHolder(View itemView) {
             super(itemView);
             iv = itemView.findViewById(R.id.iv);
@@ -200,7 +320,26 @@ public class ReMenAdapter  extends RecyclerView.Adapter<ReMenAdapter.ViewHolder>
             tv2 = itemView.findViewById(R.id.tv2);
             tv3 = itemView.findViewById(R.id.tv3);
             iv_shutdown=itemView.findViewById(R.id.iv_shutdown);
+            iv_xihuan = itemView.findViewById(R.id.iv_xihuan);
+            tv_xihuan = itemView.findViewById(R.id.tv_xihuan);
+            iv_shoucang = itemView.findViewById(R.id.iv_shoucang);
+            tv_shoucang = itemView.findViewById(R.id.tv_shoucang);
+            iv_shoucang1 = itemView.findViewById(R.id.iv_shoucang1);
 
         }
     }
+    public void refreshData(List<Videos.DataBean> list){
+        if(data != null){
+            data.clear();
+            data.addAll(list);
+            notifyDataSetChanged();
+        }
+    }
+    public void loadmoreData(List<Videos.DataBean> list){
+        if(data != null){
+            data.addAll(list);
+            notifyDataSetChanged();
+        }
+    }
+
 }

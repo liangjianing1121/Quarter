@@ -76,7 +76,8 @@
         <activity android:name=".YuLanActivity" />
         <activity android:name=".UserVideoActivity" />
         <activity android:name=".MyZuoPinActivity" />
-        <activity android:name=".VideoActivity"></activity>
+        <activity android:name=".VideoActivity" />
+        <activity android:name=".Main2Activity"></activity>
     </application>
 
 </manifest>

@@ -47,7 +47,7 @@ public class VideoActivity extends BaseActivity {
 
         view = View.inflate(this, R.layout.simple_player_view_player, player);
 
-      /*  PlayerView playerView = new PlayerView(VideoActivity.this,player)
+        PlayerView playerView = new PlayerView(VideoActivity.this,player)
                 .setTitle(desc)
                 .setScaleType(PlayStateParams.fitparent)
                 .forbidTouch(false)
@@ -72,7 +72,8 @@ public class VideoActivity extends BaseActivity {
         playerView.setForbidDoulbeUp(true);
         //隐藏全屏按钮，true 隐藏，false 为显示
         playerView.hideFullscreen(true);
-*/
+
+        tv_title.setText(desc);
     }
 
     @Override

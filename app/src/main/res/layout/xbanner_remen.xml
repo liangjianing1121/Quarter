@@ -10,6 +10,8 @@
         android:layout_height="@dimen/y100"
         app:pointsPosition="CENTER"
         app:AutoPlayTime="3000"
+        android:descendantFocusability="blocksDescendants"
+        android:focusable="true"
         />
 
 </RelativeLayout>

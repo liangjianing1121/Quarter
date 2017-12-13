@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 
 import okhttp3.CacheControl;
 import okhttp3.FormBody;
+import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.MultipartBody;
 import okhttp3.Request;
@@ -86,6 +87,22 @@ public class MyIntercept implements Interceptor {
                 }
                 request=request.newBuilder().post(builder.build()).build();
             }
+        }
+        else if(request.method().equals("GET"))
+        {
+
+            SharedPreferences token = context.getSharedPreferences("token", Context.MODE_PRIVATE);
+            String token1 = token.getString("token", "");
+
+            HttpUrl httpUrl = request.url()
+                    .newBuilder()
+                    .addQueryParameter("source","android")
+                    .addQueryParameter("appVersion",versionCode+"")
+                    .addQueryParameter("token",token1)
+                    .build();
+           request= request.newBuilder().url(httpUrl).build();
+
+
         }
 
         return chain.proceed(request);
