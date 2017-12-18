@@ -1,6 +1,7 @@
 package model;
 
 import bean.AddFavorite;
+import bean.BaseBean;
 import bean.Praise;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -139,6 +140,47 @@ public class PraiseModel {
 
     }
 
+    public void putComment(String uid,String wid,String content){
+
+
+        new NetRequestUtils.Builder().addCallAdapterFactories(RxJava2CallAdapterFactory.create())
+                .addConverterFactories(GsonConverterFactory.create())
+                .build().getApiService().comment(uid,wid,content)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<BaseBean>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(BaseBean value) {
+
+                        String code = value.code;
+                        if("0".equals(code))
+                        {
+                            iGetParise.CommonSuccess(value);
+                        }
+                        else
+                        {
+                            iGetParise.commonFailure(value);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        System.out.println(e.toString()+"=========评论");
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
 
     public void setiGetParise(PraiseModel.iGetParise iGetParise) {
         this.iGetParise = iGetParise;
@@ -154,6 +196,9 @@ public class PraiseModel {
 
         void cancelFavoriteSuccess(AddFavorite addFavorite);
         void cancelFavoriteFailure(AddFavorite addFavorite);
+
+        void CommonSuccess(BaseBean baseBean);
+        void commonFailure(BaseBean baseBean);
 
 
 

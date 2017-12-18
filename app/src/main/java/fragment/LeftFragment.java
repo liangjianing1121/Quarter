@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,9 +18,12 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.dell.quarter.ChangeUserActivity;
+import com.example.dell.quarter.FavoriteActivity;
+import com.example.dell.quarter.FollowActivity;
 import com.example.dell.quarter.MyApp;
 import com.example.dell.quarter.MyZuoPinActivity;
 import com.example.dell.quarter.R;
+import com.example.dell.quarter.SearchFriendActivity;
 import com.example.dell.quarter.SettingActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
 
@@ -49,6 +53,9 @@ public class LeftFragment extends Fragment implements UserView, View.OnClickList
 
     private View view;
     private LinearLayout ll_zuopin;
+    private RelativeLayout rl5;
+    private RelativeLayout rl7;
+    private RelativeLayout rl6;
 
     @Nullable
     @Override
@@ -62,7 +69,6 @@ public class LeftFragment extends Fragment implements UserView, View.OnClickList
         {
             parent.removeView(view);
         }
-
         return view;
     }
 
@@ -89,11 +95,17 @@ public class LeftFragment extends Fragment implements UserView, View.OnClickList
       tvName=view.findViewById(R.id.tv_leftname);
       llShezhi = view.findViewById(R.id.ll_shezhi);
       ll_zuopin = view.findViewById(R.id.ll_zuopin);
+      rl5 = view.findViewById(R.id.relativeLayout5);
+        rl7 = view.findViewById(R.id.relativeLayout7);
+
+        rl6 = view.findViewById(R.id.relativeLayout6);
 
 
-        ivHead.setOnClickListener(this);
+      ivHead.setOnClickListener(this);
       llShezhi.setOnClickListener(this);
       ll_zuopin.setOnClickListener(this);
+      rl5.setOnClickListener(this);
+      rl6.setOnClickListener(this);
     }
 
     private void initData() {
@@ -138,6 +150,19 @@ public class LeftFragment extends Fragment implements UserView, View.OnClickList
             case R.id.ll_zuopin:
                 Intent intent2=new Intent(getContext(), MyZuoPinActivity.class);
                 startActivity(intent2);
+                break;
+            case R.id.relativeLayout5:
+                Intent intent3=new Intent(getActivity(), FollowActivity.class);
+                getActivity().startActivity(intent3);
+                
+                break;
+            case R.id.relativeLayout7:
+                Intent intent4=new Intent(getActivity(), SearchFriendActivity.class);
+                getActivity().startActivity(intent4);
+                break;
+            case R.id.relativeLayout6:
+                Intent intent5=new Intent(getActivity(), FavoriteActivity.class);
+                startActivity(intent5);
                 break;
         }
     }

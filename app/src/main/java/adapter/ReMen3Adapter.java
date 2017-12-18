@@ -44,7 +44,7 @@ public class ReMen3Adapter  extends RecyclerView.Adapter<ReMen3Adapter.ViewHolde
         mHeights = new ArrayList<>();
         for(int i=0; i < data.size();i++){
             //随机的获取一个范围为200-600直接的高度
-            mHeights.add((int)(200+Math.random()*400));
+            mHeights.add((int)(300+Math.random()*400));
         }
     }
 

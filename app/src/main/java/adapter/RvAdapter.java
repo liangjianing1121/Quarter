@@ -2,11 +2,15 @@ package adapter;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -18,13 +22,16 @@ import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.List;
 
+import bean.BaseBean;
 import bean.Duanzi;
+import presenter.CommentJokePresenter;
+import view.CommentJokeView;
 
 /**
  * Created by DELL on 2017/11/28.
  */
 
-public class RvAdapter extends RecyclerView.Adapter<RvAdapter.ViewHolder>{
+public class RvAdapter extends RecyclerView.Adapter<RvAdapter.ViewHolder> implements CommentJokeView {
 
     private Context context;
     private List<Duanzi.DataBean> list;
@@ -53,7 +60,8 @@ public class RvAdapter extends RecyclerView.Adapter<RvAdapter.ViewHolder>{
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
+        final CommentJokePresenter presenter=new CommentJokePresenter(context,this);
         holder.setIsRecyclable(false);
         holder.tv_date.setText(list.get(position).createTime);
         holder.tv_name.setText(list.get(position).user.nickname);
@@ -112,6 +120,28 @@ public class RvAdapter extends RecyclerView.Adapter<RvAdapter.ViewHolder>{
                 holder.tv1.setVisibility(View.VISIBLE);
                 holder.tv2.setVisibility(View.VISIBLE);
                 holder.tv3.setVisibility(View.VISIBLE);
+
+                holder.iv_animation1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        SharedPreferences uid = context.getSharedPreferences("uid", Context.MODE_PRIVATE);
+                        final int uid1 = uid.getInt("uid", 0);
+
+                        final EditText editText=new EditText(context);
+                        new AlertDialog.Builder(context).setTitle("说点什么.....")
+                                .setView(editText)
+                                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        presenter.commentJoke(uid1+"",list.get(position).jid+"",editText.getText().toString());
+                                    }
+                                })
+                                .setNegativeButton("取消",null)
+                                .create().show();
+                    }
+                });
+
+
             }
         });
         holder.iv_shutdown.setOnClickListener(new View.OnClickListener() {
@@ -178,6 +208,22 @@ public class RvAdapter extends RecyclerView.Adapter<RvAdapter.ViewHolder>{
     @Override
     public int getItemCount() {
         return list.size();
+    }
+
+    @Override
+    public void RequestSuccess(BaseBean baseBean) {
+        Toast.makeText(context, baseBean.msg, Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void RequestFailure(BaseBean baseBean) {
+        Toast.makeText(context, baseBean.msg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void Failure(BaseBean baseBean) {
+
     }
 
 

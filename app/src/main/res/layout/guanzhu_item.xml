@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/x5"
+    android:background="?android:attr/selectableItemBackground"  >
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/iv_head"
+        android:layout_width="@dimen/x50"
+        android:layout_height="@dimen/x50"
+        android:layout_above="@+id/textView3"
+        android:layout_alignLeft="@+id/relativeLayout5"
+        android:layout_alignStart="@+id/relativeLayout5"
+        fresco:roundAsCircle="true"
+        android:layout_marginLeft="@dimen/x5"
+        app:placeholderImage="@drawable/head"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="@dimen/y10"
+        />
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/iv_head"
+        android:layout_toEndOf="@+id/iv_head"
+        android:layout_toRightOf="@+id/iv_head"
+        android:layout_marginLeft="@dimen/x25"
+        android:text="name"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/tv_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_name"
+        android:layout_toEndOf="@+id/tv_name"
+        android:layout_toRightOf="@+id/tv_name"
+        android:text="date" />
+
+    <ImageView
+        android:layout_width="@dimen/x15"
+        android:layout_height="@dimen/x15"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/raw_1499943790"
+        android:layout_centerVertical="true"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_below="@+id/iv_head"
+        android:background="#999"
+        />
+
+
+
+
+
+</RelativeLayout>

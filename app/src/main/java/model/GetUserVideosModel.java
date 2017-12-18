@@ -87,9 +87,7 @@ public class GetUserVideosModel {
 
                     }
                 });
-
     }
-
 
     public void getFollow(String uid,String followid){
         new NetRequestUtils.Builder().addConverterFactories(GsonConverterFactory.create())
@@ -127,11 +125,7 @@ public class GetUserVideosModel {
 
                     }
                 });
-
-
     }
-
-
     public void setiGetUserVideos(GetUserVideosModel.iGetUserVideos iGetUserVideos) {
         this.iGetUserVideos = iGetUserVideos;
     }

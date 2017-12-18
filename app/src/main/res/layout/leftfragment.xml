@@ -74,6 +74,7 @@
             android:layout_marginLeft="@dimen/x30"
             android:layout_marginRight="@dimen/x30"
             android:layout_marginTop="@dimen/x20"
+            android:background="?android:attr/selectableItemBackground"
             >
 
             <ImageView
@@ -106,6 +107,7 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:background="?android:attr/selectableItemBackground"
             android:id="@+id/relativeLayout6"
             android:layout_width="match_parent"
             android:layout_height="@dimen/y25"
@@ -182,6 +184,7 @@
         </RelativeLayout>
 
         <RelativeLayout
+
             android:id="@+id/relativeLayout8"
             android:layout_width="match_parent"
             android:layout_height="@dimen/y25"

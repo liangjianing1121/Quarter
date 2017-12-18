@@ -3,21 +3,30 @@ package adapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Presentation;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.sax.StartElementListener;
+import android.support.v7.view.menu.MenuView;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.amap.api.services.geocoder.AoiItem;
 import com.bumptech.glide.Glide;
 import com.dou361.ijkplayer.listener.OnShowThumbnailListener;
 import com.dou361.ijkplayer.widget.PlayStateParams;
@@ -25,12 +34,15 @@ import com.dou361.ijkplayer.widget.PlayerView;
 import com.example.dell.quarter.HomeActivity;
 import com.example.dell.quarter.R;
 import com.example.dell.quarter.UserVideoActivity;
+import com.example.dell.quarter.VideoActivity;
+import com.example.dell.quarter.VideoDetailActivity;
 import com.facebook.drawee.view.SimpleDraweeView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import bean.AddFavorite;
+import bean.BaseBean;
 import bean.Praise;
 import bean.UserVideos;
 import bean.Videos;
@@ -58,6 +70,11 @@ public class ReMenAdapter  extends RecyclerView.Adapter<ReMenAdapter.ViewHolder>
     private ObjectAnimator fanimator2;
     private ObjectAnimator fanimator3;
     private PraisePresenter praisePresenter;
+    private LinearLayout ll_qqfriend;
+    private LinearLayout ll_pengyou;
+    private LinearLayout ll_qqkongjian;
+    private LinearLayout ll_weixin;
+    private Button bt_quxiao;
 
     public ReMenAdapter(Activity context, List<Videos.DataBean> data) {
         this.context = context;
@@ -75,6 +92,8 @@ public class ReMenAdapter  extends RecyclerView.Adapter<ReMenAdapter.ViewHolder>
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         praisePresenter = new PraisePresenter(this);
         holder.setIsRecyclable(false);
+
+
 
         holder.iv.setImageURI(data.get(position).user.icon);
         holder.tv_date.setText(data.get(position).createTime);
@@ -174,9 +193,6 @@ public class ReMenAdapter  extends RecyclerView.Adapter<ReMenAdapter.ViewHolder>
             }
         });
 
-
-
-
         holder.iv_xihuan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -215,9 +231,86 @@ public class ReMenAdapter  extends RecyclerView.Adapter<ReMenAdapter.ViewHolder>
                 holder.tv_shoucang.setText(data.get(position).favoriteNum+"");
             }
         });
+
+        holder.ll4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final EditText editText=new EditText(context);
+                new AlertDialog.Builder(context).setTitle("说点什么.....")
+                        .setView(editText)
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                int uid = data.get(position).uid;
+                                System.out.println("============评论的uid=========="+uid);
+                                int wid = data.get(position).wid;
+                                praisePresenter.getComment(uid+"",wid+"",editText.getText().toString());
+                            }
+                        })
+                        .setNegativeButton("取消",null)
+                        .create().show();
+            }
+        });
+
+
+        holder.ll3.setOnClickListener(new View.OnClickListener() {
+
+            private PopupWindow mpopupWindow;
+
+            @Override
+            public void onClick(View view) {
+                View popview = View.inflate(context, R.layout.item_pop, null);
+
+                mpopupWindow = new PopupWindow(popview);
+                mpopupWindow.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
+                mpopupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+                ll_qqfriend = popview.findViewById(R.id.ll_qqfriend);
+                ll_qqkongjian = popview.findViewById(R.id.ll_qqkongjian);
+                ll_pengyou = popview.findViewById(R.id.ll_pengyou);
+                ll_weixin = popview.findViewById(R.id.ll_weixin);
+                bt_quxiao = popview.findViewById(R.id.bt_quxiao);
+
+
+               // View rootview = View.inflate(context, R.layout.remenitem, null);
+                mpopupWindow.showAtLocation(holder.rl, Gravity.BOTTOM, 0, 0);
+
+
+                ColorDrawable dw = new ColorDrawable(0xb0000000);
+                holder.rl.setBackgroundDrawable(dw);
+
+                bt_quxiao.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        ColorDrawable cd = new ColorDrawable(0000000);
+                        holder.rl.setBackgroundDrawable(cd);
+                        mpopupWindow.dismiss();
+                    }
+                });
+            }
+        });
+        List<Videos.DataBean.CommentsBean> comments = data.get(position).comments;
+        holder.tv_comment_name.setText(data.get(position).uid+"");
+
+        if(comments.size()>0&&comments!=null){
+            Videos.DataBean.CommentsBean commentsBean = comments.get(0);
+            String content = commentsBean.content;
+            holder.tv_comment.setText(content);
+        }
+
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(context, VideoDetailActivity.class);
+                intent.putExtra("wid",data.get(position).wid+"");
+                context.startActivity(intent);
+            }
+        });
+
     }
 
     @Override
+
     public int getItemCount() {
         return data.size();
     }
@@ -284,6 +377,21 @@ public class ReMenAdapter  extends RecyclerView.Adapter<ReMenAdapter.ViewHolder>
         Toast.makeText(context,addFavorite.msg, Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * 评论返回的接口
+     * @param baseBean
+     */
+    @Override
+    public void CommonSuccess(BaseBean baseBean) {
+        Toast.makeText(context,baseBean.msg, Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void commonFailure(BaseBean baseBean) {
+        Toast.makeText(context,baseBean.msg, Toast.LENGTH_SHORT).show();
+    }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -305,6 +413,12 @@ public class ReMenAdapter  extends RecyclerView.Adapter<ReMenAdapter.ViewHolder>
         private final ImageView iv_shoucang;
         private final TextView tv_shoucang;
         private final ImageView iv_shoucang1;
+        private final LinearLayout ll4;
+        private final LinearLayout ll3;
+        private final RelativeLayout rl;
+        private final TextView tv_comment_name;
+        private final TextView tv_comment;
+
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -325,6 +439,12 @@ public class ReMenAdapter  extends RecyclerView.Adapter<ReMenAdapter.ViewHolder>
             iv_shoucang = itemView.findViewById(R.id.iv_shoucang);
             tv_shoucang = itemView.findViewById(R.id.tv_shoucang);
             iv_shoucang1 = itemView.findViewById(R.id.iv_shoucang1);
+            ll4 = itemView.findViewById(R.id.ll4);
+
+            ll3 = itemView.findViewById(R.id.ll3);
+            rl = itemView.findViewById(R.id.rl);
+            tv_comment_name = itemView.findViewById(R.id.tv_comment_name);
+            tv_comment = itemView.findViewById(R.id.tv_comment);
 
         }
     }

@@ -108,10 +108,8 @@
             android:text="+关注"
             android:background="@drawable/user_bg"
             android:textSize="10sp"
-            android:textColor="#03A9F4"/>
-
-
-
+            android:textColor="#03A9F4"
+            />
 
     </LinearLayout>
 

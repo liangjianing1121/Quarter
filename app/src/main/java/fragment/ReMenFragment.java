@@ -30,6 +30,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
+import javax.xml.validation.Validator;
+
 import adapter.ReMenAdapter;
 import bean.Ad;
 import bean.Videos;

@@ -2,6 +2,7 @@ package view;
 
 import base.BaseView;
 import bean.AddFavorite;
+import bean.BaseBean;
 import bean.Praise;
 
 /**
@@ -19,6 +20,9 @@ public interface PraiseView extends BaseView {
 
     void cancelFavoriteSuccess(AddFavorite addFavorite);
     void cancelFavoriteFailure(AddFavorite addFavorite);
+
+    void CommonSuccess(BaseBean baseBean);
+    void commonFailure(BaseBean baseBean);
 
 
 

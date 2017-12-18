@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.dou361.ijkplayer.widget.SurfaceRenderView;
 import com.example.dell.quarter.R;
 import com.facebook.common.internal.Objects;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
@@ -41,6 +43,7 @@ public class RemenFragment3 extends Fragment implements GetHotVideoView {
     private List<HotVideo.DataBean> list;
     private GetHotVideoPresenter presenter;
     private int i;
+    private StaggeredGridLayoutManager staggeredGridLayoutManager;
 
     @Nullable
     @Override
@@ -70,7 +73,15 @@ public class RemenFragment3 extends Fragment implements GetHotVideoView {
         list=new ArrayList<>();
         xrv.setPullRefreshEnabled(true);
         xrv.setLoadingMoreEnabled(true);
-        xrv.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        staggeredGridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
+
+        //xrv.setLayoutManager(staggeredGridLayoutManager);
+
+
+
+
+
 
     }
 
@@ -92,9 +103,31 @@ public class RemenFragment3 extends Fragment implements GetHotVideoView {
     public void RequestSuccess(HotVideo hotVideo) {
         Toast.makeText(getContext(), hotVideo.msg, Toast.LENGTH_SHORT).show();
         list.addAll(hotVideo.data);
+
         if(reMen3Adapter==null)
         {
             reMen3Adapter = new ReMen3Adapter(getContext(),list);
+
+            staggeredGridLayoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
+            //顶部错位解决
+            staggeredGridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
+
+
+            xrv.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                @Override
+                public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                    super.onScrollStateChanged(recyclerView, newState);
+                    staggeredGridLayoutManager.invalidateSpanAssignments();
+
+                }
+
+                @Override
+                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                    super.onScrolled(recyclerView, dx, dy);
+                }
+            });
+
+            xrv.setLayoutManager(staggeredGridLayoutManager);
             xrv.setAdapter(reMen3Adapter);
 
         }

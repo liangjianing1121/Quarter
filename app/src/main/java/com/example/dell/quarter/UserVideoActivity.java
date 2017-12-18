@@ -2,6 +2,7 @@ package com.example.dell.quarter;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,6 +25,7 @@ import bean.Videos;
 import de.greenrobot.event.EventBus;
 import de.greenrobot.event.Subscribe;
 import de.greenrobot.event.ThreadMode;
+import okhttp3.Interceptor;
 import presenter.GetUserVideoPresenter;
 import utils.ImmersionUtil;
 import utils.SharedPreferencesUtil;
@@ -92,10 +94,15 @@ public class UserVideoActivity extends BaseActivity<GetUserVideoPresenter> imple
         {
             case R.id.bt_follow:
                 SharedPreferences uidsp = getSharedPreferences("uid", MODE_PRIVATE);
-                int uid = uidsp.getInt("uid", 0);
-                System.out.println("要关注的用户id"+uid1);
-                presenter.getFollow(uid+"",uid1+"");
-                break;
+            int uid = uidsp.getInt("uid", 0);
+            System.out.println("1"+uid1);
+
+
+            presenter.getFollow(uid+"",uid1+"");
+            bt_follow.setBackgroundColor(R.drawable.user_bg2);
+            bt_follow.setText("已关注");
+            bt_follow.setTextColor(Color.WHITE);
+            break;
         }
 
     }
@@ -172,7 +179,6 @@ public class UserVideoActivity extends BaseActivity<GetUserVideoPresenter> imple
                 xrv.loadMoreComplete();
             }
         });
-
     }
 
     @Override
@@ -193,13 +199,7 @@ public class UserVideoActivity extends BaseActivity<GetUserVideoPresenter> imple
         int follow = data.follow;
         tv_fensi.setText("  "+fans+"  粉丝  |   ");
         tv_guanzhu.setText(follow+"     关注");
-        token = user.data.token;
 
-        System.out.println(token+"======获取用户token======");
-
-        SharedPreferences tokensp = getSharedPreferences("token", MODE_PRIVATE);
-        SharedPreferences.Editor edit = tokensp.edit();
-        edit.putString("token",token).commit();
         presenter.getUserVideo(uid1+"",1+"");
     }
     @Override
@@ -214,6 +214,8 @@ public class UserVideoActivity extends BaseActivity<GetUserVideoPresenter> imple
     @Override
     public void FollowSuccess(Follow follow) {
         showToast(follow.msg);
+        String code = follow.code;
+
 
     }
 

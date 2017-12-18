@@ -4,7 +4,8 @@
     android:layout_height="match_parent"
     android:background="?android:attr/selectableItemBackground"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
-    >
+
+    android:id="@+id/rl">
 
 
 
@@ -313,13 +314,40 @@
     </LinearLayout>
 
 
+    <LinearLayout
+        android:id="@+id/ll5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll4"
+        android:layout_marginTop="@dimen/y30">
+        <TextView
+            android:id="@+id/tv_comment_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#39BBF7"
+            android:text="name"
+            android:layout_marginLeft="@dimen/x10"
+            android:textSize="18sp"/>
+
+        <TextView
+            android:id="@+id/tv_comment"
+            android:layout_marginLeft="@dimen/x20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="评论"
+            android:textSize="18sp"/>
+
+    </LinearLayout>
+
+
 
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/x1"
         android:background="#EDEBED"
-        android:layout_below="@+id/rv_duanzi"
+        android:layout_below="@+id/ll5"
         />
+
 
 
 

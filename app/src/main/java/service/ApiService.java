@@ -1,5 +1,7 @@
 package service;
 
+import com.example.dell.quarter.GetFollowUser;
+
 import java.util.List;
 
 import bean.Ad;
@@ -7,17 +9,21 @@ import bean.AddFavorite;
 import bean.BaseBean;
 import bean.Duanzi;
 import bean.Follow;
+import bean.GetFavorite;
+import bean.GetWorkInfo;
 import bean.HotVideo;
 import bean.Login;
 import bean.Praise;
 import bean.PublishJoke;
 import bean.PublishVideos;
+import bean.RandomFriend;
 import bean.Register;
 import bean.UpLoad;
 import bean.UpdateNickname;
 import bean.User;
 import bean.UserVideos;
 import bean.Version;
+import bean.VideoDetail;
 import bean.Videos;
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
@@ -103,7 +109,7 @@ public interface ApiService {
 
     @POST("quarter/follow")
     @FormUrlEncoded
-    Observable<Follow> geteFollow(@Field("uid") String uid,@Field("followid") String followid);
+    Observable<Follow> geteFollow(@Field("uid") String uid,@Field("followId") String followid);
 
 
     /*@POST("quarter/getHotVideos")
@@ -130,10 +136,29 @@ public interface ApiService {
     @FormUrlEncoded
     Observable<BaseBean> comment(@Field("uid") String uid,@Field("wid") String wid, @Field("content") String content);
 
-    
+    @Headers("cache:20")
+    @GET("quarter/getFollowUsers")
+    Observable<GetFollowUser> getFollowUser(@Query("uid") String uid);
+
+    @POST("quarter/commentJoke")
+    @FormUrlEncoded
+    Observable<BaseBean> commentJoke(@Field("uid") String uid,@Field("jid") String jid,@Field("content") String content);
 
 
+    @POST("quarter/getWorkInfo")
+    @FormUrlEncoded
+    Observable<GetWorkInfo> getWorkInfo(@Field("uid") String uid);
 
+    @POST("quarter/randomFriends")
+    Observable<RandomFriend> getrandomFriends();
+
+    @POST("quarter/getFavorites")
+    @FormUrlEncoded
+    Observable<GetFavorite> getFavorite(@Field("uid") String uid);
+
+    @POST("quarter/getVideoDetail")
+    @FormUrlEncoded
+    Observable<VideoDetail> getVideoDetail(@Field("wid") String wid);
 
 
 }

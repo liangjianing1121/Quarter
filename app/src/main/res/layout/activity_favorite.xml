@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.dell.quarter.FavoriteActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y25"
+        android:background="#03A9F4"
+        android:id="@+id/include">
+
+        <TextView
+            android:id="@+id/tv_fanhui"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/y5"
+            android:text="返回"
+            android:textColor="#fff"
+            android:layout_marginLeft="@dimen/x5"/>
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="我的收藏"
+            android:layout_marginTop="@dimen/y5"
+            android:textColor="#ffffff"/>
+
+
+        <TextView
+            android:id="@+id/tv_fabiao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="删除"
+            android:textColor="#fff"
+            android:layout_marginTop="@dimen/y5"
+            android:layout_marginRight="@dimen/x5"/>
+    </RelativeLayout>
+
+
+
+    <com.jcodecraeer.xrecyclerview.XRecyclerView
+        android:id="@+id/favorite_xrv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/y25"/>
+
+
+
+
+
+
+
+
+
+</RelativeLayout>

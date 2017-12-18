@@ -6,6 +6,7 @@ import android.view.View;
 
 import base.BasePresenter;
 import bean.AddFavorite;
+import bean.BaseBean;
 import bean.Praise;
 import model.PraiseModel;
 import view.PraiseView;
@@ -43,6 +44,10 @@ public class PraisePresenter extends BasePresenter<PraiseView> implements Praise
     public void addFavorite(String uid,String wid){
         praiseModel.addFavorite(uid,wid);
     }
+
+    public void getComment(String uid,String wid,String conent){
+        praiseModel.putComment(uid,wid,conent);
+    }
     @Override
     public void getPraiseSuccess(Praise praise) {
         mView.getPraiseSuccess(praise);
@@ -75,4 +80,17 @@ public class PraisePresenter extends BasePresenter<PraiseView> implements Praise
     public void cancelFavoriteFailure(AddFavorite addFavorite) {
         mView.cancelFavoriteFailure(addFavorite);
     }
+
+    @Override
+    public void CommonSuccess(BaseBean baseBean) {
+        mView.CommonSuccess(baseBean);
+    }
+
+    @Override
+    public void commonFailure(BaseBean baseBean) {
+
+        mView.commonFailure(baseBean);
+    }
+
+
 }
