@@ -274,22 +274,22 @@ public class ReMenAdapter  extends RecyclerView.Adapter<ReMenAdapter.ViewHolder>
                // View rootview = View.inflate(context, R.layout.remenitem, null);
                 mpopupWindow.showAtLocation(holder.rl, Gravity.BOTTOM, 0, 0);
 
-
+/*
                 ColorDrawable dw = new ColorDrawable(0xb0000000);
-                holder.rl.setBackgroundDrawable(dw);
+                holder.rl.setBackgroundDrawable(dw);*/
 
                 bt_quxiao.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        ColorDrawable cd = new ColorDrawable(0000000);
-                        holder.rl.setBackgroundDrawable(cd);
+                       /* ColorDrawable cd = new ColorDrawable(0000000);
+                        holder.rl.setBackgroundDrawable(cd);*/
                         mpopupWindow.dismiss();
                     }
                 });
             }
         });
         List<Videos.DataBean.CommentsBean> comments = data.get(position).comments;
-        holder.tv_comment_name.setText(data.get(position).uid+"");
+        holder.tv_comment_name.setText(data.get(position).user.nickname);
 
         if(comments.size()>0&&comments!=null){
             Videos.DataBean.CommentsBean commentsBean = comments.get(0);

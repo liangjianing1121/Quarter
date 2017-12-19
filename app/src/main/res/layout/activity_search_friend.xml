@@ -1,13 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.example.dell.quarter.SearchFriendActivity">
 
     <android.support.v7.widget.SearchView
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/x40"></android.support.v7.widget.SearchView>
+        android:id="@+id/searchView"
+        android:layout_width="wrap_content"
+        android:iconifiedByDefault="false"
+        android:layout_height="@dimen/x40"
+        app:queryHint="输入ID或钟友名"/>
 
-</RelativeLayout>
+
+
+    <com.jcodecraeer.xrecyclerview.XRecyclerView
+        android:id="@+id/xrv1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y150"></com.jcodecraeer.xrecyclerview.XRecyclerView>
+
+
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y20"
+        android:background="#EBEBEB"
+        />
+
+
+    <com.jcodecraeer.xrecyclerview.XRecyclerView
+        android:id="@+id/xrv2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></com.jcodecraeer.xrecyclerview.XRecyclerView>
+
+
+
+
+</LinearLayout>

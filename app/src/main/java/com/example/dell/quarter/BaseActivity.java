@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -14,6 +15,7 @@ import com.umeng.analytics.MobclickAgent;
 import java.lang.reflect.AnnotatedElement;
 
 import base.BasePresenter;
+import utils.ActivityCollector;
 
 public abstract class BaseActivity<p extends BasePresenter> extends AppCompatActivity implements View.OnClickListener{
 
@@ -41,7 +43,7 @@ public abstract class BaseActivity<p extends BasePresenter> extends AppCompatAct
         initView();
         setListener();
         initData();
-
+        ActivityCollector.addActivity(this);
 
     }
     @Override
@@ -124,5 +126,11 @@ public abstract class BaseActivity<p extends BasePresenter> extends AppCompatAct
             presenter.deatach();
         }
 
+        ActivityCollector.removeActivity(this);
+
     }
+
+
+
+
 }

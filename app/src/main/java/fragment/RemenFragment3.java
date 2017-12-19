@@ -89,9 +89,6 @@ public class RemenFragment3 extends Fragment implements GetHotVideoView {
         xrv = view.findViewById(R.id.xrv);
     }
 
-    
-
-
     @Override
     public void onResume() {
         super.onResume();

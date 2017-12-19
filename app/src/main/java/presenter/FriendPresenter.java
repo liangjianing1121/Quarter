@@ -4,6 +4,7 @@ import android.content.Context;
 
 import base.BasePresenter;
 import bean.RandomFriend;
+import bean.SearchFriend;
 import model.FriendModel;
 import view.FriendView;
 
@@ -31,6 +32,10 @@ public class FriendPresenter extends BasePresenter<FriendView> implements Friend
         friendModel.randomFriends();
     }
 
+    public void searchFriend(String keywords,String page){
+        friendModel.searchFriend(keywords,page);
+    }
+
 
     @Override
     public void RandomFriendSuccess(RandomFriend randomFriend) {
@@ -40,5 +45,15 @@ public class FriendPresenter extends BasePresenter<FriendView> implements Friend
     @Override
     public void RandomFriendFailure(RandomFriend randomFriend) {
         mView.RandomFriendFailure(randomFriend);
+    }
+
+    @Override
+    public void SearchFriendSuccess(SearchFriend searchFriend) {
+        mView.SearchFriendSuccess(searchFriend);
+    }
+
+    @Override
+    public void SearchFriendFailure(SearchFriend searchFriend) {
+        mView.SearchFriendFailure(searchFriend);
     }
 }

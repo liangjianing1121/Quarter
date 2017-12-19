@@ -47,11 +47,12 @@ public class VideoActivity extends BaseActivity {
 
         view = View.inflate(this, R.layout.simple_player_view_player, player);
 
+        String replace = videourl.replace("https://www.zhaoapi.cn", "http://120.27.23.105");
         PlayerView playerView = new PlayerView(VideoActivity.this,player)
                 .setTitle(desc)
                 .setScaleType(PlayStateParams.fitparent)
                 .forbidTouch(false)
-                .setPlaySource(videourl)
+                .setPlaySource(replace)
                 .startPlay();
 
         //隐藏返回键，true 隐藏，false 为显示

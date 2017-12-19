@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.example.dell.quarter.ChangeUserActivity;
 import com.example.dell.quarter.FavoriteActivity;
 import com.example.dell.quarter.FollowActivity;
+import com.example.dell.quarter.LoginActivity;
 import com.example.dell.quarter.MyApp;
 import com.example.dell.quarter.MyZuoPinActivity;
 import com.example.dell.quarter.R;
@@ -96,16 +97,15 @@ public class LeftFragment extends Fragment implements UserView, View.OnClickList
       llShezhi = view.findViewById(R.id.ll_shezhi);
       ll_zuopin = view.findViewById(R.id.ll_zuopin);
       rl5 = view.findViewById(R.id.relativeLayout5);
-        rl7 = view.findViewById(R.id.relativeLayout7);
-
-        rl6 = view.findViewById(R.id.relativeLayout6);
-
-
+      rl7 = view.findViewById(R.id.relativeLayout7);
+      rl6 = view.findViewById(R.id.relativeLayout6);
       ivHead.setOnClickListener(this);
       llShezhi.setOnClickListener(this);
       ll_zuopin.setOnClickListener(this);
       rl5.setOnClickListener(this);
       rl6.setOnClickListener(this);
+      rl7.setOnClickListener(this);
+      tvName.setOnClickListener(this);
     }
 
     private void initData() {
@@ -115,14 +115,6 @@ public class LeftFragment extends Fragment implements UserView, View.OnClickList
 
     @Override
     public void RequestSuccess(User user) {
-       /* User.DataBean data = user.data;
-        String nickname = data.nickname;
-        String icon = data.icon;
-        user1 = user;
-
-        ivHead.setImageURI(icon);
-        tvName.setText(nickname);*/
-
         EventBus.getDefault().postSticky(user);
     }
 
@@ -163,6 +155,10 @@ public class LeftFragment extends Fragment implements UserView, View.OnClickList
             case R.id.relativeLayout6:
                 Intent intent5=new Intent(getActivity(), FavoriteActivity.class);
                 startActivity(intent5);
+                break;
+            case R.id.tv_leftname:
+                Intent intent6=new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent6);
                 break;
         }
     }

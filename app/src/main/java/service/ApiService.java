@@ -13,11 +13,13 @@ import bean.GetFavorite;
 import bean.GetWorkInfo;
 import bean.HotVideo;
 import bean.Login;
+import bean.NearVideos;
 import bean.Praise;
 import bean.PublishJoke;
 import bean.PublishVideos;
 import bean.RandomFriend;
 import bean.Register;
+import bean.SearchFriend;
 import bean.UpLoad;
 import bean.UpdateNickname;
 import bean.User;
@@ -149,7 +151,7 @@ public interface ApiService {
     @FormUrlEncoded
     Observable<GetWorkInfo> getWorkInfo(@Field("uid") String uid);
 
-    @POST("quarter/randomFriends")
+    @GET("quarter/randomFriends?")
     Observable<RandomFriend> getrandomFriends();
 
     @POST("quarter/getFavorites")
@@ -159,6 +161,20 @@ public interface ApiService {
     @POST("quarter/getVideoDetail")
     @FormUrlEncoded
     Observable<VideoDetail> getVideoDetail(@Field("wid") String wid);
+
+    @POST("quarter/searchFriends")
+    @FormUrlEncoded
+    Observable<SearchFriend> searchFriends(@Field("keywords") String keywords,@Field("page") String page);
+
+    @POST("quarter/getNearVideos")
+    @FormUrlEncoded
+    Observable<NearVideos> getNearVideos(@Field("page") String page, @Field("latitude") String latitude,@Field("longitude") String longitude);
+
+
+    @POST("quarter/removeWork")
+    @FormUrlEncoded
+    Observable<BaseBean> removeWork(@Field("uid") String uid,@Field("wid") String wid);
+
 
 
 }
