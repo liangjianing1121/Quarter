@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
@@ -27,6 +28,7 @@ import de.greenrobot.event.EventBus;
 import fragment.Fragment1;
 import fragment.Fragment2;
 import fragment.Fragment3;
+import fragment.Fragment4;
 import fragment.LeftFragment;
 import presenter.UserPresenter;
 import utils.ActivityCollector;
@@ -44,6 +46,8 @@ public class HomeActivity extends BaseActivity<UserPresenter> implements UserVie
     private DrawerLayout drawerLayout;
     private TextView tv_title;
     private ImageView iv_publish;
+    private TextView tv4;
+    private ImageView iv4;
 
 
     @Override
@@ -62,10 +66,12 @@ public class HomeActivity extends BaseActivity<UserPresenter> implements UserVie
                 iv1.setImageResource(R.drawable.tuijianlian);
                 iv2.setImageResource(R.drawable.duanzi);
                 iv3.setImageResource(R.drawable.shipin);
+                iv4.setImageResource(R.drawable.find);
 
                 tv1.setTextColor(Color.rgb(18,150,219));
                 tv2.setTextColor(Color.rgb(191,201,217));
                 tv3.setTextColor(Color.rgb(191,201,217));
+                tv4.setTextColor(Color.rgb(191,201,217));
 
                 tv_title.setText("推荐");
                 break;
@@ -74,10 +80,12 @@ public class HomeActivity extends BaseActivity<UserPresenter> implements UserVie
                 iv1.setImageResource(R.drawable.tuijian);
                 iv2.setImageResource(R.drawable.duanzilan);
                 iv3.setImageResource(R.drawable.shipin);
+                iv4.setImageResource(R.drawable.find);
 
                 tv1.setTextColor(Color.rgb(191,201,217));
                 tv2.setTextColor(Color.rgb(18,150,219));
                 tv3.setTextColor(Color.rgb(191,201,217));
+                tv4.setTextColor(Color.rgb(191,201,217));
                 tv_title.setText("段子");
                 break;
             case R.id.ll_shipin:
@@ -85,11 +93,26 @@ public class HomeActivity extends BaseActivity<UserPresenter> implements UserVie
                 iv1.setImageResource(R.drawable.tuijian);
                 iv2.setImageResource(R.drawable.duanzi);
                 iv3.setImageResource(R.drawable.shipinlan);
+                iv4.setImageResource(R.drawable.find);
 
                 tv1.setTextColor(Color.rgb(191,201,217));
                 tv2.setTextColor(Color.rgb(191,201,217));
                 tv3.setTextColor(Color.rgb(18,150,219));
+                tv4.setTextColor(Color.rgb(191,201,217));
                 tv_title.setText("视频");
+                break;
+            case R.id.ll_faxian:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment,new Fragment4()).commit();
+                iv1.setImageResource(R.drawable.tuijian);
+                iv2.setImageResource(R.drawable.duanzi);
+                iv3.setImageResource(R.drawable.shipin);
+                iv4.setImageResource(R.drawable.find2);
+
+                tv1.setTextColor(Color.rgb(191,201,217));
+                tv2.setTextColor(Color.rgb(191,201,217));
+                tv3.setTextColor(Color.rgb(191,201,217));
+                tv4.setTextColor(Color.rgb(18,150,219));
+                tv_title.setText("发现");
                 break;
             case R.id.iv_publish:
                 startActivity(PublishActivity.class);
@@ -123,6 +146,7 @@ public class HomeActivity extends BaseActivity<UserPresenter> implements UserVie
         LinearLayout ll_tuijian = findViewById(R.id.ll_tuijian);
         LinearLayout ll_duanzi = findViewById(R.id.ll_duanzi);
         LinearLayout ll_shipin = findViewById(R.id.ll_shipin);
+        LinearLayout ll_faxian = findViewById(R.id.ll_faxian);
         iv_publish = findViewById(R.id.iv_publish);
         tv_title = findViewById(R.id.tv_title);
         tv1 = findViewById(R.id.tv1);
@@ -131,6 +155,8 @@ public class HomeActivity extends BaseActivity<UserPresenter> implements UserVie
         iv1 = findViewById(R.id.iv1);
         iv2 = findViewById(R.id.iv2);
         iv3 = findViewById(R.id.iv3);
+        tv4 = findViewById(R.id.tv4);
+        iv4 = findViewById(R.id.iv4);
         iv_publish.setOnClickListener(this);
         drawerLayout = findViewById(R.id.drawerLayout);
         drawerLayout.setScrimColor(Color.TRANSPARENT);
@@ -139,6 +165,7 @@ public class HomeActivity extends BaseActivity<UserPresenter> implements UserVie
         ll_duanzi.setOnClickListener(this);
         ll_shipin.setOnClickListener(this);
         ll_tuijian.setOnClickListener(this);
+        ll_faxian.setOnClickListener(this);
         drawerLayout.addDrawerListener(new DrawerLayout.DrawerListener() {
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {

@@ -49,9 +49,9 @@ public interface ApiService {
     @FormUrlEncoded
     Observable<Login> getlogin(@Field("mobile") String mobile, @Field("password") String password);
 
-    @POST("user/reg")
+    @POST("quarter/register")
     @FormUrlEncoded
-    Observable<Register> getRegister(@Field("mobile") String mobile, @Field("password") String password);
+    Observable<Register> getRegister(@Field("regType") String regType,@Field("mobile") String mobile, @Field("password") String password);
 
 
     @POST("user/getUserInfo")

@@ -19,10 +19,10 @@ public class RegisterModel {
 
     private iRegister iRegister;
 
-    public void  getRegister(String mobile,String password){
+    public void  getRegister(String regType,String mobile,String password){
         new NetRequestUtils.Builder().addCallAdapterFactories(RxJava2CallAdapterFactory.create())
                 .addConverterFactories(GsonConverterFactory.create())
-                .build().getApiService().getRegister(mobile,password)
+                .build().getApiService().getRegister(regType,mobile,password)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Register>() {

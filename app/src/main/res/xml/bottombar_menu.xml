@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<tabs>
+    <tab
+        id="@+id/tab_recents"
+        title="消息"
+        icon="@drawable/ic_message"
+        barColorWhenSelected="#2fabe1"
+        />
+    <tab
+        id="@+id/tab_favorites"
+        title="联系人"
+        icon="@drawable/ic_lianxiren"
+        barColorWhenSelected="#2fabe1"
+        />
+    <tab
+        id="@+id/tab_nearby"
+        title="动态"
+        icon="@drawable/ic_dongtai"
+        barColorWhenSelected="#2fabe1"
+        />
+
+</tabs>
+

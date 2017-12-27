@@ -29,8 +29,8 @@ public class RegisterPresenter extends BasePresenter<RegisterView> implements Re
     }
 
 
-    public  void  Refgister(String mobile,String password){
-        registerModel.getRegister(mobile,password);
+    public  void  Refgister(String regType,String mobile,String password){
+        registerModel.getRegister(regType,mobile,password);
     }
 
 

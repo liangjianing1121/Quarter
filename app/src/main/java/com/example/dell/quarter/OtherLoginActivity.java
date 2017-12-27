@@ -1,5 +1,6 @@
 package com.example.dell.quarter;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hyphenate.EMCallBack;
+import com.hyphenate.chat.EMClient;
 import com.igexin.sdk.aidl.IGexinMsgService;
 
 import java.util.Observable;
@@ -80,7 +83,6 @@ public class OtherLoginActivity extends BaseActivity<LoginPresenter> implements 
     public void initData() {
         String sha1 = MapUtils.getSHA1(this);
         System.out.println(sha1+"++++++++++++++++++++++++++");
-
     }
 
     @Override
@@ -102,6 +104,37 @@ public class OtherLoginActivity extends BaseActivity<LoginPresenter> implements 
         edit1.putInt("uid",login.data.uid);
         edit1.commit();
 
+
+        Login.DataBean data = login.data;
+        String mobile = data.mobile;
+        String password = data.password;
+
+        EMClient.getInstance().login(mobile,password, new EMCallBack() {
+            @Override
+            public void onSuccess() {
+              //  startActivity(new Intent(OtherLoginActivity.this,MainActivity.class));
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(OtherLoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+            }
+
+            @Override
+            public void onError(int i, String s) {
+                System.out.println("登录失败"+s);
+
+            }
+
+            @Override
+            public void onProgress(int i, String s) {
+
+            }
+        });
+
     }
 
     @Override
@@ -114,6 +147,7 @@ public class OtherLoginActivity extends BaseActivity<LoginPresenter> implements 
     public void Failure(Login login) {
 
     }
+
 
 
 }

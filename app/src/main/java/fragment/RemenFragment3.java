@@ -77,12 +77,6 @@ public class RemenFragment3 extends Fragment implements GetHotVideoView {
         staggeredGridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
 
         //xrv.setLayoutManager(staggeredGridLayoutManager);
-
-
-
-
-
-
     }
 
     private void initView() {

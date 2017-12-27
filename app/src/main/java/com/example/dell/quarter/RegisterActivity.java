@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.exceptions.HyphenateException;
 import com.igexin.sdk.aidl.IGexinMsgService;
 
 import base.BasePresenter;
@@ -74,7 +76,7 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
             case R.id.bt_reg:
                 mobile = et_phone.getText().toString();
                 psd = et_psd.getText().toString();
-                presenter.Refgister(mobile,psd);
+                presenter.Refgister(0+"",mobile,psd);
             break;
         }
     }
@@ -83,6 +85,8 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
     @Override
     public void RequestSuccess(Object o) {
         Toast.makeText(this, o.toString(), Toast.LENGTH_SHORT).show();
+
+        signup();
 
     }
 
@@ -94,5 +98,22 @@ public class RegisterActivity extends BaseActivity<RegisterPresenter> implements
     @Override
     public void Failure(Object o) {
         Toast.makeText(this, o.toString(), Toast.LENGTH_SHORT).show();
+    }
+
+   public void signup(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    EMClient.getInstance().createAccount(mobile,psd);
+                    System.out.println("注册成功");
+                    Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
+                } catch (HyphenateException e) {
+                    e.printStackTrace();
+                    System.out.println("注册失败"+e.getMessage());
+                }
+
+            }
+        }).start();
     }
 }
